@@ -412,7 +412,7 @@ public class Jeu {
                 return stratB.choix(this);
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
         return 0;
     }
@@ -856,7 +856,6 @@ public class Jeu {
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            System.out.println(e);
         }
     }
 
