@@ -21,7 +21,7 @@ public class Main {
             System.out.println(Strat49.DELEMITER);
             j.runIA(stratToTest, 10000);
         }*/
-        j.runIA(stratToTest, 100000);
+        j.runIA(stratToTest, 10000);
 
         // Humain vs IA avec le numéro d'IA en paramètre
         //j.runHvsIA(0);

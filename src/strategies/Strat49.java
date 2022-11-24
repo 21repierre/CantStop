@@ -7,9 +7,12 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
-    public static double DELEMITER = 0.66;
+    public static double THRESHOLD = 0.66;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
+    int[][] stats = new int[][]{
+            new int[]{2, 11, 12, 4}, new int[]{2, 3, 12, 4}, new int[]{10, 11, 12, 5}, new int[]{2, 3, 4, 5}, new int[]{3, 11, 12, 5}, new int[]{2, 3, 11, 5}, new int[]{2, 10, 12, 5}, new int[]{2, 4, 12, 5}, new int[]{2, 10, 11, 5}, new int[]{3, 4, 12, 5}, new int[]{9, 11, 12, 5}, new int[]{2, 3, 5, 5}, new int[]{2, 9, 12, 6}, new int[]{2, 3, 10, 6}, new int[]{3, 10, 12, 6}, new int[]{4, 11, 12, 6}, new int[]{2, 4, 11, 6}, new int[]{2, 5, 12, 6}, new int[]{2, 9, 11, 6}, new int[]{3, 5, 12, 6}, new int[]{3, 10, 11, 6}, new int[]{3, 4, 11, 6}, new int[]{9, 10, 12, 6}, new int[]{2, 4, 5, 6}, new int[]{9, 10, 11, 6}, new int[]{3, 4, 5, 6}, new int[]{8, 11, 12, 6}, new int[]{2, 3, 6, 6}, new int[]{2, 9, 10, 7}, new int[]{3, 9, 11, 7}, new int[]{3, 5, 11, 7}, new int[]{4, 5, 12, 7}, new int[]{3, 9, 12, 7}, new int[]{5, 11, 12, 7}, new int[]{2, 5, 11, 7}, new int[]{2, 3, 9, 7}, new int[]{2, 8, 11, 7}, new int[]{3, 6, 12, 7}, new int[]{2, 4, 10, 7}, new int[]{4, 10, 12, 7}, new int[]{2, 8, 12, 7}, new int[]{2, 6, 12, 7}, new int[]{8, 10, 11, 7}, new int[]{3, 4, 6, 7}, new int[]{7, 11, 12, 7}, new int[]{2, 3, 7, 7}, new int[]{6, 11, 12, 7}, new int[]{4, 9, 12, 7}, new int[]{4, 10, 11, 7}, new int[]{3, 4, 10, 7}, new int[]{2, 6, 11, 7}, new int[]{2, 4, 9, 7}, new int[]{3, 8, 12, 7}, new int[]{2, 5, 10, 7}, new int[]{5, 10, 12, 7}, new int[]{2, 3, 8, 7}, new int[]{8, 10, 12, 7}, new int[]{3, 6, 11, 7}, new int[]{3, 8, 11, 7}, new int[]{4, 9, 11, 7}, new int[]{3, 5, 10, 7}, new int[]{2, 4, 6, 7}, new int[]{5, 9, 12, 7}, new int[]{2, 5, 9, 7}, new int[]{8, 9, 12, 7}, new int[]{8, 9, 11, 7}, new int[]{2, 5, 6, 7}, new int[]{3, 5, 6, 7}, new int[]{3, 7, 11, 7}, new int[]{5, 9, 11, 7}, new int[]{3, 5, 9, 7}, new int[]{2, 7, 11, 7}, new int[]{5, 10, 11, 7}, new int[]{3, 4, 9, 7}, new int[]{3, 9, 10, 7}, new int[]{4, 5, 11, 7}, new int[]{3, 7, 12, 7}, new int[]{2, 7, 12, 7}, new int[]{7, 9, 11, 7}, new int[]{3, 5, 7, 7}, new int[]{7, 10, 11, 7}, new int[]{3, 4, 7, 7}, new int[]{8, 9, 10, 7}, new int[]{6, 10, 11, 7}, new int[]{3, 4, 8, 7}, new int[]{4, 5, 6, 7}, new int[]{5, 9, 10, 7}, new int[]{4, 5, 9, 7}, new int[]{7, 10, 12, 8}, new int[]{2, 4, 7, 8}, new int[]{6, 9, 11, 8}, new int[]{3, 5, 8, 8}, new int[]{7, 9, 12, 8}, new int[]{2, 5, 7, 8}, new int[]{2, 6, 10, 8}, new int[]{4, 8, 12, 8}, new int[]{2, 8, 10, 8}, new int[]{6, 10, 12, 8}, new int[]{4, 6, 12, 8}, new int[]{2, 4, 8, 8}, new int[]{2, 8, 9, 8}, new int[]{4, 9, 10, 8}, new int[]{3, 6, 10, 8}, new int[]{4, 5, 10, 8}, new int[]{4, 8, 11, 8}, new int[]{5, 6, 12, 8}, new int[]{5, 8, 11, 8}, new int[]{3, 6, 9, 8}, new int[]{6, 9, 12, 8}, new int[]{2, 5, 8, 8}, new int[]{2, 7, 10, 8}, new int[]{3, 8, 10, 8}, new int[]{4, 6, 11, 8}, new int[]{5, 8, 12, 8}, new int[]{2, 6, 9, 8}, new int[]{4, 7, 12, 8}, new int[]{2, 7, 9, 8}, new int[]{3, 8, 9, 8}, new int[]{5, 6, 11, 8}, new int[]{4, 7, 11, 8}, new int[]{5, 7, 12, 8}, new int[]{3, 7, 10, 8}, new int[]{5, 7, 11, 8}, new int[]{3, 7, 9, 8}, new int[]{6, 9, 10, 8}, new int[]{4, 5, 8, 8}, new int[]{7, 9, 10, 8}, new int[]{4, 5, 7, 8}, new int[]{5, 7, 9, 8}, new int[]{6, 8, 11, 8}, new int[]{3, 6, 8, 8}, new int[]{5, 6, 10, 8}, new int[]{4, 8, 9, 8}, new int[]{5, 8, 10, 8}, new int[]{7, 8, 12, 8}, new int[]{4, 6, 9, 8}, new int[]{2, 6, 7, 8}, new int[]{7, 8, 11, 8}, new int[]{3, 6, 7, 8}, new int[]{5, 8, 9, 8}, new int[]{5, 6, 9, 8}, new int[]{4, 7, 10, 8}, new int[]{6, 8, 12, 8}, new int[]{4, 6, 10, 8}, new int[]{4, 8, 10, 8}, new int[]{2, 6, 8, 8}, new int[]{7, 8, 10, 8}, new int[]{4, 6, 7, 8}, new int[]{7, 8, 9, 8}, new int[]{5, 6, 7, 8}, new int[]{2, 7, 8, 8}, new int[]{6, 7, 12, 8}, new int[]{4, 7, 9, 8}, new int[]{6, 7, 11, 8}, new int[]{5, 7, 10, 8}, new int[]{3, 7, 8, 8}, new int[]{6, 8, 9, 8}, new int[]{5, 6, 8, 8}, new int[]{6, 7, 10, 9}, new int[]{4, 7, 8, 9}, new int[]{6, 8, 10, 9}, new int[]{4, 6, 8, 9}, new int[]{6, 7, 9, 9}, new int[]{5, 7, 8, 9}, new int[]{6, 7, 8, 9}
+    };
     private int currentStep = 0;
 
     public Strat49() {
@@ -20,126 +23,82 @@ public class Strat49 implements Strategie {
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
         int[] maxs = j.getMaximum();
+        int[] myProgress = j.avancementJoueurEnCours();
+        int[] otProgress = j.avancementAutreJoueur();
 
-        int bestChoice = -1;
+        int bestChoice = 0;
 
-        // On choisit le meilleur parmis les bonzes deja places
+        double[] scores = new double[j.getNbChoix()];
+
+        // Chaque choix se voit attribuer un score
         for (int i = 0; i < j.getNbChoix(); i++) {
-            if (choix[i][0] == choix[i][1]) {
-                if (bestChoice == -1) bestChoice = i;
-                else {
-                    for (int[] bonze : bonzes) {
-                        if (bonze[0] == choix[i][0] + 2) {
-                            for (int[] bonze2 : bonzes) {
-                                if (bonze2[0] == choix[bestChoice][0] + 2) {
-                                    if (bonze[1] > bonze2[1]) bestChoice = i;
-                                }
-                            }
-                        }
-                    }
+
+            // 1ere etape: avancement relatif par rapport a l'adversaire
+            boolean b1 = false;
+            boolean b2 = choix[i][1] == 0;
+            for (int[] bonze : bonzes) {
+                if (bonze[0] == choix[i][0]) {
+                    scores[i] += (bonze[1] - otProgress[choix[i][0] - 2]) / (double) maxs[bonze[0] - 2];
+                    b1 = true;
+                }
+                if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
+                    scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
+                    b2 = true;
                 }
             }
-            if (bestChoice == -1) {
-                for (int[] bonze : bonzes) {
-                    if (bonze[0] == choix[i][0] + 2 || bonze[0] == choix[i][1] + 2) {
-                        bestChoice = i;
-                        break;
-                    }
-                }
-            } else {
-                /*
-                on recupere les bonzes du choix i et du bestChoice
-                on compart les ecart (maximum - bonze) modules par les probabilites de tirer la colonne
-                 */
-                int[] b1 = null;
-                int[] b2 = null;
-                int[] bc1 = null;
-                int[] bc2 = null;
-                for (int[] bonze : bonzes) {
-                    if (bonze[0] == choix[i][0] + 2) {
-                        b1 = bonze;
-                    }
-                    if (bonze[0] == choix[i][1] + 2) {
-                        b2 = bonze;
-                    }
-                    if (bonze[0] == choix[bestChoice][0] + 2) {
-                        bc1 = bonze;
-                    }
-                    if (bonze[0] == choix[bestChoice][1] + 2) {
-                        bc2 = bonze;
-                    }
-                }
-                int[] diffs = new int[4];
-                if (b1 != null) {
-                    int ec1 = maxs[b1[0] - 2] - b1[1];
-                    if (bc1 != null) {
-                        int ecc1 = maxs[bc1[0] - 2] - bc1[1];
-                        diffs[0] = ec1 * (b1[0] - 1) / 36 - ecc1 * (bc1[0] - 1) / 36; // >0 on prefere bestChoix[0]
-                    }
-                    if (bc2 != null) {
-                        int ecc2 = maxs[bc2[0] - 2] - bc2[1];
-                        diffs[2] = ec1 * (b1[0] - 1) / 36 - ecc2 * (bc2[0] - 1) / 36;
-                    }
-                }
-                if (b2 != null) {
-                    int ec2 = maxs[b2[0] - 2] - b2[1];
-                    if (bc1 != null) {
-                        int ecc1 = maxs[bc1[0] - 2] - bc1[1];
-                        diffs[1] = ec2 * (b2[0] - 1) / 36 - ecc1 * (bc1[0] - 1) / 36;
-                    }
-                    if (bc2 != null) {
-                        int ecc2 = maxs[bc2[0] - 2] - bc2[1];
-                        diffs[3] = ec2 * (b2[0] - 1) / 36 - ecc2 * (bc2[0] - 1) / 36;
-                    }
-                }
-
-                if (diffs[0] >= 0 && diffs[1] > 0 || diffs[2] >= 0 && diffs[3] > 0) {
-                    // bestChoix mieux dans les 2 cas
-                } else if (diffs[0] < 0 && diffs[1] < 0 || diffs[2] < 0 && diffs[3] < 0) {
-                    // i meilleur
-                    bestChoice = i;
-                } else if (diffs[0] + diffs[1] > 0 || diffs[2] + diffs[3] > 0) {
-
-                } else if (diffs[0] + diffs[1] < 0 || diffs[2] + diffs[3] < 0) {
-                    bestChoice = i;
-                } else {
-                    if (rng.nextDouble() > 0.5) bestChoice = i;
-                }
+            if (!b1) {
+                scores[i] += (myProgress[choix[i][0] - 2] - otProgress[choix[i][0] - 2]) / (double) maxs[choix[i][0] - 2];
             }
+            if (!b2) {
+                scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
+            }
+
+            // 2eme etape: probabilite de retirer cette colonne au prochina tour
+            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+
         }
-        if (bestChoice == -1) {
-            bestChoice = 0;
-            double bestMoy = (choix[0][0] + choix[0][1]) / 2d;
-            for (int i = 0; i < j.getNbChoix(); i++) {
-                double moy = (choix[i][0] + choix[i][1]) / 2d;
-                if (Math.abs(moy - 7) <= Math.abs(bestMoy - 7)) {
-                    if (moy == bestMoy) {
-                        if (Math.abs(choix[i][0] - 7) + Math.abs(choix[i][1] - 7) < Math.abs(choix[bestChoice][0] - 7) + Math.abs(choix[bestChoice][1] - 7)) {
-                            bestChoice = i;
-                            bestMoy = moy;
-                        }
-                    }
-                }
-            }
+
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] > scores[bestChoice]) bestChoice = i;
         }
 
         currentStep++;
-        return bestChoice == -1 ? rng.nextInt(j.getNbChoix()) : bestChoice;
+        return bestChoice;
     }
+
+    private double p(int n) {
+        if (n < 2) return 0;
+        if (n <= 7) return (n - 1) / 36d;
+        else return (12 - n + 1) / 36d;
+    }
+
 
     @Override
     public boolean stop(Jeu j) {
         int[][] bonzes = j.getBonzes();
 
-        /*
-        Plus de chances de stop quand on joue bcp d'affile
-        Mais c'est module en fonction de l'etat de la partie
-         */
-        double baseStop = rng.nextDouble(0, Math.max(maxStep - currentStep + 1, 1));
+        if (j.getBonzesRestants() == 0) {
+
+            int[] ids = Arrays.stream(new int[]{bonzes[0][0], bonzes[1][0], bonzes[2][0]}).sorted().toArray();
+
+            for (int[] stat : stats) {
+                if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
+                    if (3.5 * currentStep >= stat[3]) {
+                        currentStep = 0;
+                        return true;
+                    } else return false;
+                }
+            }
+        }
 
         /*
-        Modulation en fonction des bonzes
-         */
+        //Plus de chances de stop quand on joue bcp d'affile
+        //Mais c'est module en fonction de l'etat de la partie
+
+        double baseStop = rng.nextDouble(0, Math.max(maxStep - currentStep + 1, 1));
+
+
+        //Modulation en fonction des bonzes
         for (int[] bonze : bonzes) {
             if (bonze[0] == 0) continue;
             // Pour chaque bonze qui a atteind le max on augmente la chance de stop
@@ -151,17 +110,18 @@ public class Strat49 implements Strategie {
         // On prend plus de risques quand le score de l'adversaire est haut
         baseStop += j.scoreAutreJoueur() / rng.nextDouble(1.3, 1.5);
 
-        boolean shouldStop = baseStop < DELEMITER;
+        boolean shouldStop = baseStop < THRESHOLD;
         if (shouldStop) {
             currentStep = 0;
             return true;
         } else {
             return false;
-        }
+        }*/
+        return false;
     }
 
     @Override
     public String getName() {
-        return "BOUDVILLAIN PIERRE";
+        return "BOUDVILLAIN PIERRE2";
     }
 }
