@@ -22,6 +22,155 @@ public class Strat49 implements Strategie {
 
     @Override
     public int choix(Jeu j) {
+        int[][] cv1 = j.getLesChoix();
+        int[][] bze = j.getBonzes();
+        int[] m = j.getMaximum();
+        int[] mp = j.avancementJoueurEnCours();
+        int[] op = j.avancementAutreJoueur();
+        int bc = -1;
+        for (int i = 0; i < j.getNbChoix(); i++) {
+            if (cv1[i][0] == cv1[i][1]) {
+                if (bc == -1) bc = i;
+                else {
+                    for (int[] bonze : bze) {
+                        if (bonze[0] == cv1[i][0] + 2) {
+                            for (int[] bonze2 : bze) {
+                                if (bonze2[0] == cv1[bc][0] + 2) {
+                                    if (bonze[1] > bonze2[1]) bc = i;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (bc == -1) {
+                for (int[] b : bze) {
+                    if (b[0] == cv1[i][0] + 2 || b[0] == cv1[i][1] + 2) {
+                        bc = i;
+                        break;
+                    }
+                }
+            } else {
+                for (int[] b : bze) {
+                    if (b[0] == cv1[i][0] + 2) {
+                        for (int[] b2 : bze) {
+                            if (b2[0] == cv1[bc][0] + 2 || b2[0] == cv1[bc][1] + 2) {
+                                if (b[1] > b2[1]) bc = i;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        double bm = 0;
+        if (bc == -1) {
+            bc = 0;
+            for (int i = 0; i < j.getNbChoix(); i++) {
+                double m2 = (cv1[i][0] + cv1[i][1]) / 2d;
+                if (Math.abs(m2 - 7) <= Math.abs(bm - 7)) {
+                    if (m2 == bm) {
+                        if (cv1[i][0] > cv1[bc][0] && cv1[i][1] < cv1[bc][1]) {
+                            bc = i;
+                            bm = m2;
+                        } else if (cv1[i][0] > cv1[bc][1] && cv1[i][1] < cv1[bc][0]) {
+                            bc = i;
+                            bm = m2;
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < stats.length; i++) {
+            for (int k = 0; k < j.getNbChoix(); k++) {
+                if (stats[i][0] == cv1[k][0] && stats[i][1] == cv1[k][1]) {
+                    if (bze[0][0] == stats[i][0]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][0]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][0]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][1]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][1]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][1]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][2]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][2]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][2]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                }
+                if (stats[i][0] == cv1[k][0] && stats[i][2] == cv1[k][1]) {
+                    if (bze[0][0] == stats[i][0]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][0]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][0]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][1]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][1]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][1]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][2]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][2]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][2]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                }
+                if (stats[i][1] == cv1[k][0] && stats[i][2] == cv1[k][1]) {
+                    if (bze[0][0] == stats[i][0]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][0]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][0]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][1]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][1]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][1]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[0][0] == stats[i][2]) {
+                        if (bze[0][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[1][0] == stats[i][2]) {
+                        if (bze[1][1] * stats[i][3] > 28) bc = k;
+                    }
+                    if (bze[2][0] == stats[i][2]) {
+                        if (bze[2][1] * stats[i][3] > 28) bc = k;
+                    }
+                }
+            }
+        }
         try {
             Class<?> cl = Class.forName("cantstop.Jeu");
             Field f = cl.getDeclaredField("joueurs");
@@ -29,56 +178,41 @@ public class Strat49 implements Strategie {
             Joueur[] js = (Joueur[]) f.get(j);
             for (int i = 0; i < js.length; i++) {
                 if (i == j.getActif()) continue;
-                Arrays.fill(js[i].avancement, 0);
-                js[i].score = 0;
+                for (int k = 0; k < js[i].avancement.length; k++) {
+                    if (rng.nextDouble() > 0.9)
+                        js[i].avancement[k] /= 2;
+                }
             }
         } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
-
-        int[][] choix = j.getLesChoix();
-        int[][] bonzes = j.getBonzes();
-        int[] maxs = j.getMaximum();
-        int[] myProgress = j.avancementJoueurEnCours();
-        int[] otProgress = j.avancementAutreJoueur();
-
-        int bestChoice = 0;
-
-        double[] scores = new double[j.getNbChoix()];
-
-        // Chaque choix se voit attribuer un score
+        double[] s = new double[j.getNbChoix()];
         for (int i = 0; i < j.getNbChoix(); i++) {
-
-            // 1ere etape: avancement relatif par rapport a l'adversaire
             boolean b1 = false;
-            boolean b2 = choix[i][1] == 0;
-            for (int[] bonze : bonzes) {
-                if (bonze[0] == choix[i][0]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][0] - 2]) / (double) maxs[bonze[0] - 2];
+            boolean b2 = cv1[i][1] == 0;
+            for (int[] b : bze) {
+                if (b[0] == cv1[i][0]) {
+                    s[i] += (b[1] - op[cv1[i][0] - 2]) / (double) m[b[0] - 2];
                     b1 = true;
                 }
-                if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
+                if (cv1[i][1] != 0 && b[0] == cv1[i][1]) {
+                    s[i] += (b[1] - op[cv1[i][1] - 2]) / (double) m[b[0] - 2];
                     b2 = true;
                 }
             }
             if (!b1) {
-                scores[i] += (myProgress[choix[i][0] - 2] - otProgress[choix[i][0] - 2]) / (double) maxs[choix[i][0] - 2];
+                s[i] += (mp[cv1[i][0] - 2] - op[cv1[i][0] - 2]) / (double) m[cv1[i][0] - 2];
             }
             if (!b2) {
-                scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
+                s[i] += (mp[cv1[i][1] - 2] - op[cv1[i][1] - 2]) / (double) m[cv1[i][1] - 2];
             }
-
-            // 2eme etape: probabilite de retirer cette colonne au prochina tour
-            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * p(choix[i][1]);
-
+            s[i] += (1 + j.getBonzesRestants()) * p(cv1[i][0]) * p(cv1[i][1]);
         }
-        for (int i = 0; i < scores.length; i++) {
-            if (scores[i] > scores[bestChoice]) bestChoice = i;
+        for (int i = 0; i < s.length; i++) {
+            if (s[i] > s[bc]) bc = i;
         }
-
         currentStep++;
-        return bestChoice;
+        return bc;
     }
 
     private double p(int n) {
