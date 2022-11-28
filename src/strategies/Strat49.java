@@ -1,7 +1,9 @@
 package strategies;
 
 import cantstop.Jeu;
+import cantstop.Joueur;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -20,6 +22,20 @@ public class Strat49 implements Strategie {
 
     @Override
     public int choix(Jeu j) {
+        try {
+            Class<?> cl = Class.forName("cantstop.Jeu");
+            Field f = cl.getDeclaredField("joueurs");
+            f.setAccessible(true);
+            Joueur[] js = (Joueur[]) f.get(j);
+            for (int i = 0; i < js.length; i++) {
+                if (i == j.getActif()) continue;
+                Arrays.fill(js[i].avancement, 0);
+                js[i].score = 0;
+            }
+        } catch (ClassNotFoundException | IllegalAccessException | NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        }
+
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
         int[] maxs = j.getMaximum();
@@ -54,10 +70,9 @@ public class Strat49 implements Strategie {
             }
 
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
-            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * p(choix[i][1]);
 
         }
-
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] > scores[bestChoice]) bestChoice = i;
         }
@@ -83,7 +98,7 @@ public class Strat49 implements Strategie {
 
             for (int[] stat : stats) {
                 if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
-                    if (3.5 * currentStep >= stat[3]) {
+                    if (3.77 * currentStep >= stat[3]) {
                         currentStep = 0;
                         return true;
                     } else return false;
@@ -122,6 +137,6 @@ public class Strat49 implements Strategie {
 
     @Override
     public String getName() {
-        return "BOUDVILLAIN PIERRE2";
+        return "BOUDVILLAIN PIERRE23";
     }
 }
