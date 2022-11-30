@@ -2,7 +2,10 @@ package strategies;
 
 import cantstop.Jeu;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class Strat491 implements Strategie {
     int[][] stats = new int[][]{
@@ -74,9 +77,10 @@ public class Strat491 implements Strategie {
                                                     j++;
                                                 }
                                             }
-                                            cG.U1.add(s);
+                                            //cG.U1.add(s);
                                             Arc a = new Arc(s, null);
-                                            cG.E.add(a);
+                                            //cG.E.add(a);
+                                            buildChoices(a);
                                         }
                                     }
                                 }
@@ -85,97 +89,45 @@ public class Strat491 implements Strategie {
                     }
                 }
             }
-
-            buildChoices(cG, cG.E);
             System.out.println(cG.U1.size() + " - " + cG.V1.size() + " - " + cG.E.size());
         }
 
         return new Random().nextInt(0, jeu.getNbChoix());
     }
 
-    private Choice buildChoices(Graph graph, List<Arc> arcs) {
+    private Arc buildChoices(Arc arc) {
         if (bonzeRestants == 0) {
-            Choice c0 = new Choice(bonzesN[0]);
-            Choice c00 = new Choice(bonzesN[0], bonzesN[0]);
-            Choice c1 = new Choice(bonzesN[1]);
-            Choice c11 = new Choice(bonzesN[1], bonzesN[1]);
-            Choice c2 = new Choice(bonzesN[2]);
-            Choice c22 = new Choice(bonzesN[2], bonzesN[2]);
-            Choice c01 = new Choice(bonzesN[0], bonzesN[1]);
-            Choice c02 = new Choice(bonzesN[0], bonzesN[2]);
-            Choice c12 = new Choice(bonzesN[1], bonzesN[2]);
-            List<Arc> nArcs = new ArrayList<>();
-
-            for (Arc arc : arcs) {
-                System.out.println(nArcs.size());
-                State state = (State) arc.from;
-                Arc a0 = new Arc(c0, state);
-                a0.weight = p(bonzesN[0] + 2) * arc.weight;
-                nArcs.add(a0);
-
-                Arc a00 = new Arc(c00, state);
-                a00.weight = p(bonzesN[0] + 2) * p(bonzesN[0] + 2) * arc.weight;
-                nArcs.add(a00);
-
-                Arc a1 = new Arc(c1, state);
-                a1.weight = p(bonzesN[1] + 2) * arc.weight;
-                nArcs.add(a1);
-
-                Arc a11 = new Arc(c11, state);
-                a11.weight = p(bonzesN[1] + 2) * p(bonzesN[1] + 2) * arc.weight;
-                nArcs.add(a11);
-
-                Arc a2 = new Arc(c2, state);
-                a2.weight = p(bonzesN[2] + 2) * arc.weight;
-                nArcs.add(a2);
-
-                Arc a22 = new Arc(c22, state);
-                a22.weight = p(bonzesN[2] + 2) * p(bonzesN[2] + 2) * arc.weight;
-                nArcs.add(a22);
-
-                Arc a01 = new Arc(c01, state);
-                a01.weight = p(bonzesN[0] + 2) * p(bonzesN[1] + 2) * arc.weight;
-                nArcs.add(a01);
-
-                Arc a02 = new Arc(c02, state);
-                a02.weight = p(bonzesN[0] + 2) * p(bonzesN[2] + 2) * arc.weight;
-                nArcs.add(a02);
-
-                Arc a12 = new Arc(c12, state);
-                a12.weight = p(bonzesN[1] + 2) * p(bonzesN[2] + 2) * arc.weight;
-                nArcs.add(a12);
-
+            Choice[] choices = new Choice[]{
+                    new Choice(bonzesN[0]),
+                    new Choice(bonzesN[0], bonzesN[0]),
+                    new Choice(bonzesN[1]),
+                    new Choice(bonzesN[1], bonzesN[1]),
+                    new Choice(bonzesN[2]),
+                    new Choice(bonzesN[2], bonzesN[2]),
+                    new Choice(bonzesN[0], bonzesN[1]),
+                    new Choice(bonzesN[0], bonzesN[2]),
+                    new Choice(bonzesN[1], bonzesN[2])};
+            State state = (State) arc.from;
+            for (Choice choice : choices) {
+                Arc nArc = new Arc(choice, state);
+                nArc.weight = p(choice.d1);
+                if (choice.d2 != 0) nArc.weight += p(choice.d2);
+                Arc rArc = buildStates(nArc);
+                if (rArc != null) currentArcs.add(rArc);
             }
-            arcs.clear();
-            return buildStates(graph, nArcs);
         }
         return null;
     }
 
-    private Choice buildStates(Graph graph, List<Arc> arcs) {
-        List<Arc> nArcs = new ArrayList<>();
-        for (Arc arc : arcs) {
-            Choice from = (Choice) arc.from;
-            State to = (State) arc.to;
-            State nS = new State();
-            nS.state = Arrays.copyOf(to.state, to.state.length);
-            nS.state[from.d1 - 2]--;
-            if (from.d2 != 0) nS.state[from.d2 - 2]--;
-            Arc nA = new Arc(nS, from);
-            nA.weight += arc.weight;
-            nArcs.add(nA);
-            if (nS.equals(currentState)) {
-                nA.from = currentState;
-            }
-        }
-        arcs.clear();
-        graph.E = nArcs;
-        if (currentArcs.size() > 0) {
-            currentArcs.sort(Comparator.comparingDouble(a -> a.weight));
-            System.out.println("BC: " + currentArcs.get(0).to);
-            return (Choice) currentArcs.get(0).to;
-        }
-        return buildChoices(graph, nArcs);
+    private Arc buildStates(Arc arc) {
+        Choice cChoice = (Choice) arc.from;
+        State cState = (State) arc.to;
+        State preState = new State();
+        preState.state = Arrays.copyOf(cState.state, cState.state.length);
+        preState.state[cChoice.d1 - 2]--;
+        if (cChoice.d2 != 0) preState.state[cChoice.d2 - 2]--;
+        if (preState.equals(currentState)) return new Arc(preState, cChoice);
+        return buildChoices(new Arc(preState, cChoice));
     }
 
     private double p(int n) {
