@@ -87,13 +87,12 @@ public class Strat491 implements Strategie {
             }
 
             buildChoices(cG, cG.E);
-            System.out.println(cG.U1.size() + " - " + cG.V1.size() + " - " + cG.E.size());
         }
 
         return new Random().nextInt(0, jeu.getNbChoix());
     }
 
-    private Choice buildChoices(Graph graph, List<Arc> arcs) {
+    private List<Arc> buildChoices(Graph graph, List<Arc> arcs) {
         if (bonzeRestants == 0) {
             Choice c0 = new Choice(bonzesN[0]);
             Choice c00 = new Choice(bonzesN[0], bonzesN[0]);
@@ -107,7 +106,7 @@ public class Strat491 implements Strategie {
             List<Arc> nArcs = new ArrayList<>();
 
             for (Arc arc : arcs) {
-                System.out.println(nArcs.size());
+                //System.out.println(nArcs.size());
                 State state = (State) arc.from;
                 Arc a0 = new Arc(c0, state);
                 a0.weight = p(bonzesN[0] + 2) * arc.weight;
@@ -152,7 +151,7 @@ public class Strat491 implements Strategie {
         return null;
     }
 
-    private Choice buildStates(Graph graph, List<Arc> arcs) {
+    private List<Arc> buildStates(Graph graph, List<Arc> arcs) {
         List<Arc> nArcs = new ArrayList<>();
         for (Arc arc : arcs) {
             Choice from = (Choice) arc.from;
@@ -172,8 +171,7 @@ public class Strat491 implements Strategie {
         graph.E = nArcs;
         if (currentArcs.size() > 0) {
             currentArcs.sort(Comparator.comparingDouble(a -> a.weight));
-            System.out.println("BC: " + currentArcs.get(0).to);
-            return (Choice) currentArcs.get(0).to;
+            return currentArcs;
         }
         return buildChoices(graph, nArcs);
     }
