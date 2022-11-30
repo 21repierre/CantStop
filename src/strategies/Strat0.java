@@ -33,4 +33,9 @@ public class Strat0 implements Strategie {
     public String getName() {
         return "Stratégie mauvaise";
     }
+
+    @Override
+    public void end(boolean victoire) {
+
+    }
 }

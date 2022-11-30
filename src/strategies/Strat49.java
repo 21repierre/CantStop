@@ -1,9 +1,10 @@
 package strategies;
 
 import cantstop.Jeu;
+import com.github.chen0040.rl.learning.qlearn.QLearner;
+import com.github.chen0040.rl.utils.IndexValue;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 public class Strat49 implements Strategie {
 
@@ -27,7 +28,11 @@ public class Strat49 implements Strategie {
     };
     private int currentStep = 0;
 
+    private QLearner learner;
+    private List<Choice> choicesMade = new ArrayList<>();
+
     public Strat49() {
+        learner = new QLearner(50803200 / 2, 44);
     }
 
     @Override
@@ -40,7 +45,88 @@ public class Strat49 implements Strategie {
 
         int bestChoice = 0;
 
-        double[] scores = new double[j.getNbChoix()];
+        currentStep++;
+
+        Set<Integer> myActions = new HashSet<>();
+        for (int[] ints : choix) {
+            if (ints[0] < ints[1]) myActions.add(Integer.parseInt(ints[0] + "" + ints[1]));
+            else myActions.add(Integer.parseInt(ints[1] + "" + ints[0]));
+        }
+
+        int[] prog = myProgress.clone();
+        for (int[] bonze : bonzes) {
+            if (bonze[0] != 0)
+                prog[bonze[0] - 2] += bonze[1];
+        }
+        int code = 0;
+        for (int i = 0; i < prog.length; i++) {
+            code += maxs[i] * prog[i];
+        }
+        IndexValue iv = learner.selectAction(code, myActions);
+        if (iv.getValue() > 0 && iv.getIndex() != 0) {
+            String s = String.valueOf(iv.getIndex());
+            if (s.startsWith("1")) {
+                int c1 = Integer.parseInt(s.substring(0, 2));
+                if (s.length() > 2) {
+                    int c2 = Integer.parseInt(s.substring(2));
+                    for (int i = 0; i < choix.length; i++) {
+                        if (choix[i][0] == c1 && choix[i][1] == c2 || choix[i][1] == c1 && choix[i][0] == c2) {
+                            prog[c1 - 2]++;
+                            prog[c2 - 2]++;
+                            int code2 = 0;
+                            for (int k = 0; k < prog.length; k++) {
+                                code2 += maxs[k] * prog[k];
+                            }
+                            choicesMade.add(new Choice(code, iv.getIndex(), code2, 0));
+                            return i;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < choix.length; i++) {
+                        if (choix[i][1] == c1 && choix[i][0] == 0 || choix[i][0] == c1 && choix[i][1] == 0) {
+                            prog[c1 - 2]++;
+                            int code2 = 0;
+                            for (int k = 0; k < prog.length; k++) {
+                                code2 += maxs[k] * prog[k];
+                            }
+                            choicesMade.add(new Choice(code, iv.getIndex(), code2, 0));
+                            return i;
+                        }
+                    }
+                }
+            } else if (!s.equals("")) {
+                int c1 = Integer.parseInt(s.substring(0, 1));
+                if (s.length() > 1) {
+                    int c2 = Integer.parseInt(s.substring(1));
+                    for (int i = 0; i < choix.length; i++) {
+                        if (choix[i][0] == c1 && choix[i][1] == c2 || choix[i][1] == c1 && choix[i][0] == c2) {
+                            prog[c1 - 2]++;
+                            prog[c2 - 2]++;
+                            int code2 = 0;
+                            for (int k = 0; k < prog.length; k++) {
+                                code2 += maxs[k] * prog[k];
+                            }
+                            choicesMade.add(new Choice(code, iv.getIndex(), code2, 0));
+                            return i;
+                        }
+                    }
+                } else {
+                    for (int i = 0; i < choix.length; i++) {
+                        if (choix[i][1] == c1 && choix[i][0] == 0 || choix[i][0] == c1 && choix[i][1] == 0) {
+                            prog[c1 - 2]++;
+                            int code2 = 0;
+                            for (int k = 0; k < prog.length; k++) {
+                                code2 += maxs[k] * prog[k];
+                            }
+                            choicesMade.add(new Choice(code, iv.getIndex(), code2, 0));
+                            return i;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+        /*double[] scores = new double[j.getNbChoix()];
 
         // Chaque choix se voit attribuer un score
         for (int i = 0; i < j.getNbChoix(); i++) {
@@ -148,7 +234,7 @@ public class Strat49 implements Strategie {
         }
 
         currentStep++;
-        return bestChoice;
+        return bestChoice;*/
     }
 
     @Override
@@ -182,4 +268,27 @@ public class Strat49 implements Strategie {
     public String getName() {
         return "BOUDVILLAIN PIERRE";
     }
+
+    @Override
+    public void end(boolean victoire) {
+        for (Choice ch : choicesMade) {
+            learner.update(ch.oldState, ch.action, ch.newState, victoire ? 1 : -1);
+        }
+        choicesMade.clear();
+    }
 }
+
+class Choice {
+    int oldState;
+    int action;
+    int newState;
+    double recomp;
+
+    public Choice(int oldState, int action, int newState, double recomp) {
+        this.oldState = oldState;
+        this.action = action;
+        this.newState = newState;
+        this.recomp = recomp;
+    }
+}
+

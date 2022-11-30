@@ -13,10 +13,10 @@ import java.util.Scanner;
  * @author humeau
  */
 public class Jeu {
+    // les joueurs participants au jeu
+    public Joueur[] joueurs;
     // nb de joueurs (de 2 à 4 au choix de l'utilisateur)
     private int nbJoueurs;
-    // les joueurs participants au jeu
-    private Joueur[] joueurs;
     // le nombre de case de chaque colone
     private int[] maximum;
     // le positionnement des bonzes [numéro de colone 2 à 12][avancement sur la colone]
@@ -806,6 +806,13 @@ public class Jeu {
                         }
                         for (int j = 0; j < nbJoueurs; j++) {
                             if (joueurs[j].score >= 3) {
+                                if (j == 0) {
+                                    stratA.end(true);
+                                    stratB.end(false);
+                                } else {
+                                    stratB.end(true);
+                                    stratA.end(false);
+                                }
                                 int p = (j + 1) % 2;
                                 victoire[j][0]++;
                                 victoire[p][1]++;

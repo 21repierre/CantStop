@@ -36,4 +36,9 @@ public class Strat1 implements Strategie {
     public String getName() {
         return "Stratégie aléatoire";
     }
+
+    @Override
+    public void end(boolean victoire) {
+
+    }
 }

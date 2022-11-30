@@ -29,4 +29,7 @@ public interface Strategie {
      * @return le nom de l'étudiant (sous la forme PRENOM NOM)
      */
     String getName();
+
+    void end(boolean victoire);
+
 }

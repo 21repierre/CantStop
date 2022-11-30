@@ -423,4 +423,9 @@ public class Strat148 implements Strategie {
     public String getName() {
         return "BAPTISTE GRATENS";
     }
+
+    @Override
+    public void end(boolean victoire) {
+
+    }
 }

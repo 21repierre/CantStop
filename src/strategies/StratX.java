@@ -40,4 +40,9 @@ public class StratX implements Strategie {
     public String getName() {
         return "VOTRE NOM (SOUS FORME PRENOM NOM)";
     }
+
+    @Override
+    public void end(boolean victoire) {
+
+    }
 }
