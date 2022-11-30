@@ -7,8 +7,7 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
-    public static double PARAM = 0.544;
-    public static double THRESHOLD = 0.66;
+    public static double PARAM = 0.5;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
     int[][] stats = new int[][]{
@@ -65,6 +64,8 @@ public class Strat49 implements Strategie {
             if (!b2) {
                 scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
             }
+
+
             if (choix[i][0] > choix[i][1]) {
                 int tmp = choix[i][0];
                 choix[i][0] = choix[i][1];
@@ -72,20 +73,29 @@ public class Strat49 implements Strategie {
             }
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
             //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+            if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
+                scores[i] += 1000;
+            }
             if (choix[i][0] == choix[i][1]) {
-                scores[i] += probas1[choix[i][0] - 2][1];
+                if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
+                    scores[i] += 1000;
+                } else
+                    scores[i] += probas1[choix[i][0] - 2][1];
             } else if (j.getBonzesRestants() == 3) {
-                for (int k = 0; k < probas2.length; k++) {
-                    if (probas2[k][0] == choix[i][0] && probas2[k][1] == choix[i][1]) {
-                        scores[i] += probas2[k][2];
+
+                for (int[] proba : probas2) {
+                    if (proba[0] == choix[i][0] && proba[1] == choix[i][1]) {
+                        scores[i] += proba[2];
                         break;
                     }
+
                 }
+
             } else if (j.getBonzesRestants() == 1) {
                 if (bonzes[0][0] == choix[i][0] && bonzes[0][1] == choix[i][1] || bonzes[0][0] == choix[i][1] && bonzes[0][1] == choix[i][0]) {
-                    for (int k = 0; k < probas2.length; k++) {
-                        if (probas2[k][0] == choix[i][0] && probas2[k][1] == choix[i][1]) {
-                            scores[i] += probas2[k][2];
+                    for (int[] proba : probas2) {
+                        if (proba[0] == choix[i][0] && proba[1] == choix[i][1]) {
+                            scores[i] += proba[2];
                             break;
                         }
                     }
@@ -97,9 +107,9 @@ public class Strat49 implements Strategie {
                     else tmp[2] = bonzes[0][0];
                     tmp = Arrays.stream(tmp).sorted().toArray();
 
-                    for (int k = 0; k < probas3.length; k++) {
-                        if (probas3[k][0] == tmp[0] && probas3[k][1] == tmp[1] && probas3[k][2] == tmp[2]) {
-                            scores[i] += probas3[k][3];
+                    for (int[] proba : probas3) {
+                        if (proba[0] == tmp[0] && proba[1] == tmp[1] && proba[2] == tmp[2]) {
+                            scores[i] += proba[3];
                             break;
                         }
                     }
@@ -112,9 +122,9 @@ public class Strat49 implements Strategie {
                 else tmp[2] = bonzes[0][0];
                 tmp = Arrays.stream(tmp).sorted().toArray();
 
-                for (int k = 0; k < probas3.length; k++) {
-                    if (probas3[k][0] == tmp[0] && probas3[k][1] == tmp[1] && probas3[k][2] == tmp[2]) {
-                        scores[i] += probas3[k][3];
+                for (int[] proba : probas3) {
+                    if (proba[0] == tmp[0] && proba[1] == tmp[1] && proba[2] == tmp[2]) {
+                        scores[i] += proba[3];
                         break;
                     }
                 }
@@ -124,19 +134,22 @@ public class Strat49 implements Strategie {
         }
 
         for (int i = 0; i < scores.length; i++) {
+            if (scores[i] == scores[bestChoice]) {
+                // Si score egaux on favorise les nombres pairs
+                int c1 = 0;
+                int c2 = 0;
+                if (choix[i][0] % 2 == 0) c1++;
+                if (choix[i][1] % 2 == 0) c1++;
+                if (choix[bestChoice][0] % 2 == 0) c2++;
+                if (choix[bestChoice][1] % 2 == 0) c2++;
+                if (c1 > c2) bestChoice = i;
+            }
             if (scores[i] > scores[bestChoice]) bestChoice = i;
         }
 
         currentStep++;
         return bestChoice;
     }
-
-    private double p(int n) {
-        if (n < 2) return 0;
-        if (n <= 7) return (n - 1) / 36d;
-        else return (12 - n + 1) / 36d;
-    }
-
 
     @Override
     public boolean stop(Jeu j) {
@@ -149,12 +162,13 @@ public class Strat49 implements Strategie {
         }
 
         if (j.getBonzesRestants() == 0) {
-
             int[] ids = Arrays.stream(new int[]{bonzes[0][0], bonzes[1][0], bonzes[2][0]}).sorted().toArray();
-
             for (int[] stat : probas3) {
                 if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
-                    if (PARAM * currentStep >= stat[4]) {
+                    if (stat[3] < 75 && currentStep >= stat[4]) {
+                        currentStep = 0;
+                        return rng.nextBoolean();
+                    } else if (0.544 * currentStep >= stat[4]) {
                         currentStep = 0;
                         return true;
                     } else return false;
@@ -166,6 +180,6 @@ public class Strat49 implements Strategie {
 
     @Override
     public String getName() {
-        return "BOUDVILLAIN PIERRE2";
+        return "BOUDVILLAIN PIERRE";
     }
 }

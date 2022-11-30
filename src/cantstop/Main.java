@@ -16,7 +16,7 @@ public class Main {
         Jeu j = new Jeu();
 
         // On lance un tournoi avec 10 000 exécutions à chaque fois (entre chaque couple d'IA).
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 1; i++) {
             //System.out.println(Strat49.PARAM);
             j.runIA(stratToTest, 10000);
             Strat49.PARAM += 0.001;
