@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
+    public static double PARAM = 0.544;
     public static double THRESHOLD = 0.66;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
@@ -153,40 +154,13 @@ public class Strat49 implements Strategie {
 
             for (int[] stat : probas3) {
                 if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
-                    if (currentStep >= stat[4]) {
+                    if (PARAM * currentStep >= stat[4]) {
                         currentStep = 0;
                         return true;
                     } else return false;
                 }
             }
         }
-
-        /*
-        //Plus de chances de stop quand on joue bcp d'affile
-        //Mais c'est module en fonction de l'etat de la partie
-
-        double baseStop = rng.nextDouble(0, Math.max(maxStep - currentStep + 1, 1));
-
-
-        //Modulation en fonction des bonzes
-        for (int[] bonze : bonzes) {
-            if (bonze[0] == 0) continue;
-            // Pour chaque bonze qui a atteind le max on augmente la chance de stop
-            if (bonze[1] == j.getMaximum()[bonze[0] - 2]) {
-                baseStop -= 1.3;
-            }
-        }
-
-        // On prend plus de risques quand le score de l'adversaire est haut
-        baseStop += j.scoreAutreJoueur() / rng.nextDouble(1.3, 1.5);
-
-        boolean shouldStop = baseStop < THRESHOLD;
-        if (shouldStop) {
-            currentStep = 0;
-            return true;
-        } else {
-            return false;
-        }*/
         return false;
     }
 

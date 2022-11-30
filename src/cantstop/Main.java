@@ -16,12 +16,12 @@ public class Main {
         Jeu j = new Jeu();
 
         // On lance un tournoi avec 10 000 exécutions à chaque fois (entre chaque couple d'IA).
-        /*for (int i = 0; i < 11; i++) {
-            Strat49.DELEMITER = 0.6d + i / 100d;
-            System.out.println(Strat49.DELEMITER);
+        for (int i = 0; i < 200; i++) {
+            //System.out.println(Strat49.PARAM);
             j.runIA(stratToTest, 10000);
-        }*/
-        j.runIA(stratToTest, 10000);
+            Strat49.PARAM += 0.001;
+        }
+        //j.runIA(stratToTest, 10000);
 
         // Humain vs IA avec le numéro d'IA en paramètre
         //j.runHvsIA(0);
