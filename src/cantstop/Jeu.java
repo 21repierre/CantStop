@@ -1,6 +1,7 @@
 package cantstop;
 
 import strategies.Strat0;
+import strategies.Strat49;
 import strategies.Strategie;
 
 import java.util.Random;
@@ -757,10 +758,10 @@ public class Jeu {
             for (int i = 0; i < groupes.length; i++)
                 for (int j = 0; j < 5; j++)
                     res[i][j] = 0;
-            System.out.println("X vs Y => V_X - V_Y (pts, pts)");
+            //System.out.println("X vs Y => V_X - V_Y (pts, pts)");
             for (int a = 0; a < groupes.length - 1; a++) {
                 for (int b = a + 1; b < groupes.length; b++) {
-                    System.out.print(a + " vs " + b);
+                    //System.out.print(a + " vs " + b);
                     stratA = (Strategie) Class.forName("strategies.Strat" + groupes[a]).getDeclaredConstructor().newInstance();
                     stratB = (Strategie) Class.forName("strategies.Strat" + groupes[b]).getDeclaredConstructor().newInstance();
 
@@ -828,8 +829,8 @@ public class Jeu {
                     stat[a][b][3] = victoire[0][3];
                     stat[b][a][3] = victoire[1][3];
 
-                    System.out.println(" => " + victoire[0][0] + " - " + victoire[1][0] + " (" + victoire[0][2] + ", " + victoire[1][2] + ")");
-
+                    //System.out.println(" => " + victoire[0][0] + " - " + victoire[1][0] + " (" + victoire[0][2] + ", " + victoire[1][2] + ")");
+                    System.out.println(Strat49.PARAM + "," + victoire[0][0]);
                 }
             }
 
@@ -848,11 +849,11 @@ public class Jeu {
                     }
                 }
             }
-            System.out.println("Nom: V E D Pts_mis Pts_encaisses");
+            //System.out.println("Nom: V E D Pts_mis Pts_encaisses");
             for (int i = 0; i < groupes.length; i++) {
                 Strategie tmp = (Strategie) Class.forName("strategies.Strat" + groupes[i]).getDeclaredConstructor().newInstance();
 
-                System.out.println(tmp.getName() + ": " + res[i][0] + " " + res[i][1] + " " + res[i][2] + " " + res[i][3] + " " + res[i][4]);
+                //System.out.println(tmp.getName() + ": " + res[i][0] + " " + res[i][1] + " " + res[i][2] + " " + res[i][3] + " " + res[i][4]);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
-    public static double THRESHOLD = 0.66;
+    public static double PARAM = 3;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
     int[][] stats = new int[][]{
@@ -53,8 +53,9 @@ public class Strat49 implements Strategie {
                 scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
             }
 
+
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
-            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+            scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * p(choix[i][1]);
 
         }
 
@@ -83,7 +84,7 @@ public class Strat49 implements Strategie {
 
             for (int[] stat : stats) {
                 if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
-                    if (3.5 * currentStep >= stat[3]) {
+                    if (PARAM * currentStep >= stat[3]) {
                         currentStep = 0;
                         return true;
                     } else return false;

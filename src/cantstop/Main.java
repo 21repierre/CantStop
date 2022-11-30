@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         // Mettez dans ce tableau les strats à tester
         // Vous pouvez ajouter la vôtre avec votre numéro de stratégie (cf StratX.java pour voir comment le calculer)
-        int[] stratToTest = {1, 49, 148};
+        int[] stratToTest = {491, 148};
         // On instancie le jeu
         Jeu j = new Jeu();
 
@@ -21,7 +21,7 @@ public class Main {
             System.out.println(Strat49.DELEMITER);
             j.runIA(stratToTest, 10000);
         }*/
-        j.runIA(stratToTest, 10000);
+            j.runIA(stratToTest, 1);
 
         // Humain vs IA avec le numéro d'IA en paramètre
         //j.runHvsIA(0);
