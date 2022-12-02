@@ -19,7 +19,7 @@ public class Main {
         for (int i = 0; i < 1; i++) {
             //System.out.println(Strat49.PARAM);
             j.runIA(stratToTest, 10000);
-            Strat49.PARAM += 0.001;
+            Strat49.PARAM += 0.05;
         }
         //j.runIA(stratToTest, 10000);
 
