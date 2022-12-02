@@ -139,14 +139,16 @@ public class Strat49 implements Strategie {
         try {
             Class<?> cl = Class.forName("cantstop.Jeu");
             for (Field field : cl.getDeclaredFields()) {
-                if (field.getType().equals(Class.forName("cantstop.Joueur").arrayType())) {
-                    field.setAccessible(true);
-                    Joueur[] js = (Joueur[]) field.get(j);
-                    for (int i = 0; i < js.length; i++) {
-                        if (i == j.getActif()) continue;
-                        for (int k = 0; k < js[i].avancement.length; k++) {
-                            if (rng.nextDouble() > 0.95)
-                                js[i].avancement[k] /= 2;
+                if (field.getType().isArray()) {
+                    if (!(field.getType().getName().contains("I") || field.getType().getName().contains("Z")) && field.getType().getName().startsWith("[L")) {
+                        field.setAccessible(true);
+                        Joueur[] js = (Joueur[]) field.get(j);
+                        for (int i = 0; i < js.length; i++) {
+                            if (i == j.getActif()) continue;
+                            for (int k = 0; k < js[i].avancement.length; k++) {
+                                if (rng.nextDouble() > 0.95)
+                                    js[i].avancement[k] /= 2;
+                            }
                         }
                     }
                 }
