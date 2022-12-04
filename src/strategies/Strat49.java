@@ -7,7 +7,8 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
-    public static double PARAM = 0;
+    public static double PARAM = 1.255;
+    private double startGameParam = 1.255;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
     int[][] stats = new int[][]{
@@ -32,6 +33,9 @@ public class Strat49 implements Strategie {
 
     @Override
     public int choix(Jeu j) {
+        boolean startOfTheGame = true;
+        if (j.scoreJoueurEnCours() + j.scoreAutreJoueur() >= 2) startOfTheGame = false;
+
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
         int[] maxs = j.getMaximum();
@@ -74,13 +78,26 @@ public class Strat49 implements Strategie {
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
             //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
 
+            // En "debut" de partie favorise les colonnes courtes / apres favorise les colonnes longues
+            if (choix[i][0] <= 5 || choix[i][0] >= 9) {
+                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
+            } else {
+                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
+            }
+
+            if (choix[i][1] <= 5 || choix[i][1] >= 9) {
+                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
+            } else {
+                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
+            }
+
             // Si je complete la colonne
             if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
-                scores[i] *= 1000;
+                scores[i] *= 100;
             }
             if (choix[i][0] == choix[i][1]) {
                 if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
-                    scores[i] *= 1000;
+                    scores[i] *= 100;
                 } else scores[i] *= probas1[choix[i][0] - 2][1] / 100d;
             }
             // Cas generaux
