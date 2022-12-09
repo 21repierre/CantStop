@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class Strat49 implements Strategie {
 
-    public static double PARAM = 0.87;
+    public static double PARAM = 100;
     private final Random rng = new Random();
     int maxStep = 4; // ok avec 5 aussi
     int[][] stats = new int[][]{
@@ -22,7 +22,6 @@ public class Strat49 implements Strategie {
     int[][] probas3 = new int[][]{
             new int[]{3, 4, 10, 76, 3}, new int[]{3, 4, 11, 66, 2}, new int[]{3, 4, 12, 58, 1}, new int[]{3, 5, 6, 77, 3}, new int[]{3, 5, 7, 79, 4}, new int[]{3, 5, 8, 81, 4}, new int[]{3, 5, 9, 78, 4}, new int[]{3, 5, 10, 76, 3}, new int[]{3, 5, 11, 71, 2}, new int[]{3, 5, 12, 64, 2}, new int[]{3, 6, 7, 86, 6}, new int[]{3, 6, 8, 85, 6}, new int[]{3, 6, 9, 83, 5}, new int[]{3, 6, 10, 82, 5}, new int[]{3, 6, 11, 76, 3}, new int[]{3, 6, 12, 74, 3}, new int[]{3, 7, 8, 89, 8}, new int[]{3, 7, 9, 84, 5}, new int[]{3, 7, 10, 84, 5}, new int[]{3, 7, 11, 78, 4}, new int[]{3, 7, 12, 78, 4}, new int[]{3, 8, 9, 84, 5}, new int[]{3, 8, 10, 83, 5}, new int[]{3, 8, 11, 76, 3}, new int[]{3, 8, 12, 76, 3}, new int[]{3, 9, 10, 78, 4}, new int[]{3, 9, 11, 71, 2}, new int[]{3, 9, 12, 71, 2}, new int[]{3, 10, 11, 66, 2}, new int[]{3, 10, 12, 63, 2}, new int[]{3, 11, 12, 53, 1}, new int[]{4, 5, 6, 80, 4}, new int[]{4, 5, 7, 85, 6}, new int[]{4, 5, 8, 85, 6}, new int[]{4, 5, 9, 80, 4}, new int[]{4, 5, 10, 82, 5}, new int[]{4, 5, 11, 78, 4}, new int[]{4, 5, 12, 71, 2}, new int[]{4, 6, 7, 89, 8}, new int[]{4, 6, 8, 91, 10}, new int[]{4, 6, 9, 86, 6}, new int[]{4, 6, 10, 88, 7}, new int[]{4, 6, 11, 83, 5}, new int[]{4, 6, 12, 82, 5}, new int[]{4, 7, 8, 90, 9}, new int[]{4, 7, 9, 89, 8}, new int[]{4, 7, 10, 88, 7}, new int[]{4, 7, 11, 84, 5}, new int[]{4, 7, 12, 83, 5}, new int[]{4, 8, 9, 86, 6}, new int[]{4, 8, 10, 88, 7}, new int[]{4, 8, 11, 82, 5}, new int[]{4, 8, 12, 81, 4}, new int[]{4, 9, 10, 82, 5}, new int[]{4, 9, 11, 76, 3}, new int[]{4, 9, 12, 76, 3}, new int[]{4, 10, 11, 76, 3}, new int[]{4, 10, 12, 74, 3}, new int[]{4, 11, 12, 63, 2}, new int[]{5, 6, 7, 89, 8}, new int[]{5, 6, 8, 90, 9}, new int[]{5, 6, 9, 87, 7}, new int[]{5, 6, 10, 86, 6}, new int[]{5, 6, 11, 84, 5}, new int[]{5, 6, 12, 82, 5}, new int[]{5, 7, 8, 91, 10}, new int[]{5, 7, 9, 85, 6}, new int[]{5, 7, 10, 89, 8}, new int[]{5, 7, 11, 84, 5}, new int[]{5, 7, 12, 84, 5}, new int[]{5, 8, 9, 87, 7}, new int[]{5, 8, 10, 86, 6}, new int[]{5, 8, 11, 83, 5}, new int[]{5, 8, 12, 83, 5}, new int[]{5, 9, 10, 80, 4}, new int[]{5, 9, 11, 78, 4}, new int[]{5, 9, 12, 76, 3}, new int[]{5, 10, 11, 78, 4}, new int[]{5, 10, 12, 76, 3}, new int[]{5, 11, 12, 71, 2}, new int[]{6, 7, 8, 92, 12}, new int[]{6, 7, 9, 91, 10}, new int[]{6, 7, 10, 90, 9}, new int[]{6, 7, 11, 89, 8}, new int[]{6, 7, 12, 89, 8}, new int[]{6, 8, 9, 90, 9}, new int[]{6, 8, 10, 91, 10}, new int[]{6, 8, 11, 85, 6}, new int[]{6, 8, 12, 88, 7}, new int[]{6, 9, 10, 85, 6}, new int[]{6, 9, 11, 81, 4}, new int[]{6, 9, 12, 83, 5}, new int[]{6, 10, 11, 80, 4}, new int[]{6, 10, 12, 82, 5}, new int[]{6, 11, 12, 76, 3}, new int[]{7, 8, 9, 89, 8}, new int[]{7, 8, 10, 89, 8}, new int[]{7, 8, 11, 86, 6}, new int[]{7, 8, 12, 86, 6}, new int[]{7, 9, 10, 85, 6}, new int[]{7, 9, 11, 79, 4}, new int[]{7, 9, 12, 81, 4}, new int[]{7, 10, 11, 79, 4}, new int[]{7, 10, 12, 81, 4}, new int[]{7, 11, 12, 75, 3}, new int[]{8, 9, 10, 80, 4}, new int[]{8, 9, 11, 77, 3}, new int[]{8, 9, 12, 77, 3}, new int[]{8, 10, 11, 74, 3}, new int[]{8, 10, 12, 76, 3}, new int[]{8, 11, 12, 68, 2}, new int[]{9, 10, 11, 67, 2}, new int[]{9, 10, 12, 66, 2}, new int[]{9, 11, 12, 58, 1}, new int[]{10, 11, 12, 52, 1}
     };
-    private double startGameParam = 1.255;
     private int currentStep = 0;
 
     public Strat49() {
@@ -30,8 +29,7 @@ public class Strat49 implements Strategie {
 
     @Override
     public int choix(Jeu j) {
-        boolean startOfTheGame = true;
-        if (j.scoreJoueurEnCours() + j.scoreAutreJoueur() >= 4) startOfTheGame = false;
+        if (j.getBonzesRestants() == 3 && currentStep != 0) currentStep = 0;
 
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
@@ -46,27 +44,6 @@ public class Strat49 implements Strategie {
         // Chaque choix se voit attribuer un score
         for (int i = 0; i < j.getNbChoix(); i++) {
 
-            // 1ere etape: avancement relatif par rapport a l'adversaire
-            boolean b1 = false;
-            boolean b2 = choix[i][1] == 0;
-            for (int[] bonze : bonzes) {
-                if (bonze[0] == choix[i][0]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][0] - 2]) / (double) maxs[bonze[0] - 2];
-                    b1 = true;
-                }
-                if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
-                    b2 = true;
-                }
-            }
-            if (!b1) {
-                scores[i] += (myProgress[choix[i][0] - 2] - otProgress[choix[i][0] - 2]) / (double) maxs[choix[i][0] - 2];
-            }
-            if (!b2) {
-                scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
-            }
-
-
             if (choix[i][0] > choix[i][1]) {
                 int tmp = choix[i][0];
                 choix[i][0] = choix[i][1];
@@ -76,32 +53,12 @@ public class Strat49 implements Strategie {
             //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
 
             // En "debut" de partie favorise les colonnes courtes / apres favorise les colonnes longues
-            if (choix[i][0] <= 5 || choix[i][0] >= 9) {
-                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
-            } else {
-                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
-            }
 
-            if (choix[i][1] <= 5 || choix[i][1] >= 9) {
-                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
-            } else {
-                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
-            }
-
-            // Si je complete la colonne
-            if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
-                scores[i] *= 100;
-            }
-            if (choix[i][0] == choix[i][1]) {
-                if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
-                    scores[i] *= 100;
-                } else scores[i] *= probas1[choix[i][0] - 2][1] / 100d;
-            }
             // Cas generaux
-            else if (j.getBonzesRestants() == 3) {
+            if (j.getBonzesRestants() == 3) {
                 for (int[] proba : probas2) {
                     if (proba[0] == choix[i][0] && proba[1] == choix[i][1]) {
-                        scores[i] *= proba[2] / 100d;
+                        scores[i] += proba[2];
                         break;
                     }
                 }
@@ -109,7 +66,7 @@ public class Strat49 implements Strategie {
                 if (bonzes[0][0] == choix[i][0] && bonzes[0][1] == choix[i][1] || bonzes[0][0] == choix[i][1] && bonzes[0][1] == choix[i][0]) {
                     for (int[] proba : probas2) {
                         if (proba[0] == choix[i][0] && proba[1] == choix[i][1]) {
-                            scores[i] *= proba[2] / 100d;
+                            scores[i] += proba[2];
                             break;
                         }
                     }
@@ -123,7 +80,7 @@ public class Strat49 implements Strategie {
 
                     for (int[] proba : probas3) {
                         if (proba[0] == tmp[0] && proba[1] == tmp[1] && proba[2] == tmp[2]) {
-                            scores[i] *= proba[3] / 100d;
+                            scores[i] += proba[3];
                             break;
                         }
                     }
@@ -138,10 +95,32 @@ public class Strat49 implements Strategie {
 
                 for (int[] proba : probas3) {
                     if (proba[0] == tmp[0] && proba[1] == tmp[1] && proba[2] == tmp[2]) {
-                        scores[i] *= proba[3] / 100d;
+                        scores[i] += proba[3];
                         break;
                     }
                 }
+            }
+
+            if (choix[i][0] <= 5 || choix[i][0] >= 9) {
+                scores[i] *= 1;
+            } else {
+                scores[i] *= 100;
+            }
+
+            if (choix[i][1] <= 5 || choix[i][1] >= 9) {
+                scores[i] *= 1;
+            } else {
+                scores[i] *= 100;
+            }
+
+            // Si je complete la colonne
+            if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
+                scores[i] *= 100;
+            }
+            if (choix[i][0] == choix[i][1]) {
+                if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
+                    scores[i] *= 100;
+                } else scores[i] += probas1[choix[i][0] - 2][1];
             }
         }
 
@@ -170,7 +149,10 @@ public class Strat49 implements Strategie {
 
         for (int[] bonze : bonzes) {
             if (bonze[0] == 0) continue;
-            if (maxs[bonze[0] - 2] == bonze[1]) return true;
+            if (maxs[bonze[0] - 2] == bonze[1]) {
+                currentStep = 0;
+                return true;
+            }
         }
 
         if (j.getBonzesRestants() == 0) {
@@ -178,10 +160,7 @@ public class Strat49 implements Strategie {
             int[] ids = Arrays.stream(new int[]{bonzes[0][0], bonzes[1][0], bonzes[2][0]}).sorted().toArray();
             for (int[] stat : probas3) {
                 if (stat[0] == ids[0] && stat[1] == ids[1] && stat[2] == ids[2]) {
-                    if (stat[3] < 65 && currentStep >= stat[4]) {
-                        currentStep = 0;
-                        return rng.nextFloat() > 0.33;
-                    } else if (0.87 * currentStep >= stat[4]) {
+                    if (0.9 * currentStep >= stat[4]) {
                         currentStep = 0;
                         return true;
                     } else return false;

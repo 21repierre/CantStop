@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         // Mettez dans ce tableau les strats à tester
         // Vous pouvez ajouter la vôtre avec votre numéro de stratégie (cf StratX.java pour voir comment le calculer)
-        int[] stratToTest = {49, 148};
+        int[] stratToTest = {49, 148, 491};
         // On instancie le jeu
         Jeu j = new Jeu();
 
@@ -19,7 +19,7 @@ public class Main {
         for (int i = 0; i < 1; i++) {
             //System.out.println(Strat49.PARAM);
             j.runIA(stratToTest, 10000);
-            Strat49.PARAM += 0.001;
+            Strat49.PARAM += 100;
         }
         //j.runIA(stratToTest, 10000);
 
