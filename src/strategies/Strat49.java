@@ -48,7 +48,7 @@ public class Strat49 implements Strategie {
                 rr.nextInt(6);
 
             } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignored) {
-
+                
             }
         }
         boolean startOfTheGame = j.scoreJoueurEnCours() + j.scoreAutreJoueur() < 4;
