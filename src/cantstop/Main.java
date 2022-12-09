@@ -12,7 +12,8 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
         var r1 = new Random();
-
+        int d1 = r1.nextInt(6);
+        int d2 = r1.nextInt(6);
 
         // Mettez dans ce tableau les strats à tester
         // Vous pouvez ajouter la vôtre avec votre numéro de stratégie (cf StratX.java pour voir comment le calculer)
