@@ -2,6 +2,8 @@ package cantstop;
 
 import strategies.Strat49;
 
+import java.util.Random;
+
 /**
  * Lancement d'un tournoi ou d'une partie
  *
@@ -9,6 +11,9 @@ import strategies.Strat49;
  */
 public class Main {
     public static void main(String[] args) {
+        var r1 = new Random();
+
+
         // Mettez dans ce tableau les strats à tester
         // Vous pouvez ajouter la vôtre avec votre numéro de stratégie (cf StratX.java pour voir comment le calculer)
         int[] stratToTest = {49, 148};

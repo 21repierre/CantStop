@@ -2,13 +2,16 @@ package strategies;
 
 import cantstop.Jeu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
 public class Strat49 implements Strategie {
 
+    private boolean init = false;
     public static double PARAM = 0.87;
     private final Random rng = new Random();
+    private final double startGameParam = 1.255;
     int maxStep = 4; // ok avec 5 aussi
     int[][] stats = new int[][]{
             new int[]{2, 11, 12, 4}, new int[]{2, 3, 12, 4}, new int[]{10, 11, 12, 5}, new int[]{2, 3, 4, 5}, new int[]{3, 11, 12, 5}, new int[]{2, 3, 11, 5}, new int[]{2, 10, 12, 5}, new int[]{2, 4, 12, 5}, new int[]{2, 10, 11, 5}, new int[]{3, 4, 12, 5}, new int[]{9, 11, 12, 5}, new int[]{2, 3, 5, 5}, new int[]{2, 9, 12, 6}, new int[]{2, 3, 10, 6}, new int[]{3, 10, 12, 6}, new int[]{4, 11, 12, 6}, new int[]{2, 4, 11, 6}, new int[]{2, 5, 12, 6}, new int[]{2, 9, 11, 6}, new int[]{3, 5, 12, 6}, new int[]{3, 10, 11, 6}, new int[]{3, 4, 11, 6}, new int[]{9, 10, 12, 6}, new int[]{2, 4, 5, 6}, new int[]{9, 10, 11, 6}, new int[]{3, 4, 5, 6}, new int[]{8, 11, 12, 6}, new int[]{2, 3, 6, 6}, new int[]{2, 9, 10, 7}, new int[]{3, 9, 11, 7}, new int[]{3, 5, 11, 7}, new int[]{4, 5, 12, 7}, new int[]{3, 9, 12, 7}, new int[]{5, 11, 12, 7}, new int[]{2, 5, 11, 7}, new int[]{2, 3, 9, 7}, new int[]{2, 8, 11, 7}, new int[]{3, 6, 12, 7}, new int[]{2, 4, 10, 7}, new int[]{4, 10, 12, 7}, new int[]{2, 8, 12, 7}, new int[]{2, 6, 12, 7}, new int[]{8, 10, 11, 7}, new int[]{3, 4, 6, 7}, new int[]{7, 11, 12, 7}, new int[]{2, 3, 7, 7}, new int[]{6, 11, 12, 7}, new int[]{4, 9, 12, 7}, new int[]{4, 10, 11, 7}, new int[]{3, 4, 10, 7}, new int[]{2, 6, 11, 7}, new int[]{2, 4, 9, 7}, new int[]{3, 8, 12, 7}, new int[]{2, 5, 10, 7}, new int[]{5, 10, 12, 7}, new int[]{2, 3, 8, 7}, new int[]{8, 10, 12, 7}, new int[]{3, 6, 11, 7}, new int[]{3, 8, 11, 7}, new int[]{4, 9, 11, 7}, new int[]{3, 5, 10, 7}, new int[]{2, 4, 6, 7}, new int[]{5, 9, 12, 7}, new int[]{2, 5, 9, 7}, new int[]{8, 9, 12, 7}, new int[]{8, 9, 11, 7}, new int[]{2, 5, 6, 7}, new int[]{3, 5, 6, 7}, new int[]{3, 7, 11, 7}, new int[]{5, 9, 11, 7}, new int[]{3, 5, 9, 7}, new int[]{2, 7, 11, 7}, new int[]{5, 10, 11, 7}, new int[]{3, 4, 9, 7}, new int[]{3, 9, 10, 7}, new int[]{4, 5, 11, 7}, new int[]{3, 7, 12, 7}, new int[]{2, 7, 12, 7}, new int[]{7, 9, 11, 7}, new int[]{3, 5, 7, 7}, new int[]{7, 10, 11, 7}, new int[]{3, 4, 7, 7}, new int[]{8, 9, 10, 7}, new int[]{6, 10, 11, 7}, new int[]{3, 4, 8, 7}, new int[]{4, 5, 6, 7}, new int[]{5, 9, 10, 7}, new int[]{4, 5, 9, 7}, new int[]{7, 10, 12, 8}, new int[]{2, 4, 7, 8}, new int[]{6, 9, 11, 8}, new int[]{3, 5, 8, 8}, new int[]{7, 9, 12, 8}, new int[]{2, 5, 7, 8}, new int[]{2, 6, 10, 8}, new int[]{4, 8, 12, 8}, new int[]{2, 8, 10, 8}, new int[]{6, 10, 12, 8}, new int[]{4, 6, 12, 8}, new int[]{2, 4, 8, 8}, new int[]{2, 8, 9, 8}, new int[]{4, 9, 10, 8}, new int[]{3, 6, 10, 8}, new int[]{4, 5, 10, 8}, new int[]{4, 8, 11, 8}, new int[]{5, 6, 12, 8}, new int[]{5, 8, 11, 8}, new int[]{3, 6, 9, 8}, new int[]{6, 9, 12, 8}, new int[]{2, 5, 8, 8}, new int[]{2, 7, 10, 8}, new int[]{3, 8, 10, 8}, new int[]{4, 6, 11, 8}, new int[]{5, 8, 12, 8}, new int[]{2, 6, 9, 8}, new int[]{4, 7, 12, 8}, new int[]{2, 7, 9, 8}, new int[]{3, 8, 9, 8}, new int[]{5, 6, 11, 8}, new int[]{4, 7, 11, 8}, new int[]{5, 7, 12, 8}, new int[]{3, 7, 10, 8}, new int[]{5, 7, 11, 8}, new int[]{3, 7, 9, 8}, new int[]{6, 9, 10, 8}, new int[]{4, 5, 8, 8}, new int[]{7, 9, 10, 8}, new int[]{4, 5, 7, 8}, new int[]{5, 7, 9, 8}, new int[]{6, 8, 11, 8}, new int[]{3, 6, 8, 8}, new int[]{5, 6, 10, 8}, new int[]{4, 8, 9, 8}, new int[]{5, 8, 10, 8}, new int[]{7, 8, 12, 8}, new int[]{4, 6, 9, 8}, new int[]{2, 6, 7, 8}, new int[]{7, 8, 11, 8}, new int[]{3, 6, 7, 8}, new int[]{5, 8, 9, 8}, new int[]{5, 6, 9, 8}, new int[]{4, 7, 10, 8}, new int[]{6, 8, 12, 8}, new int[]{4, 6, 10, 8}, new int[]{4, 8, 10, 8}, new int[]{2, 6, 8, 8}, new int[]{7, 8, 10, 8}, new int[]{4, 6, 7, 8}, new int[]{7, 8, 9, 8}, new int[]{5, 6, 7, 8}, new int[]{2, 7, 8, 8}, new int[]{6, 7, 12, 8}, new int[]{4, 7, 9, 8}, new int[]{6, 7, 11, 8}, new int[]{5, 7, 10, 8}, new int[]{3, 7, 8, 8}, new int[]{6, 8, 9, 8}, new int[]{5, 6, 8, 8}, new int[]{6, 7, 10, 9}, new int[]{4, 7, 8, 9}, new int[]{6, 8, 10, 9}, new int[]{4, 6, 8, 9}, new int[]{6, 7, 9, 9}, new int[]{5, 7, 8, 9}, new int[]{6, 7, 8, 9}
@@ -22,16 +25,16 @@ public class Strat49 implements Strategie {
     int[][] probas3 = new int[][]{
             new int[]{3, 4, 10, 76, 3}, new int[]{3, 4, 11, 66, 2}, new int[]{3, 4, 12, 58, 1}, new int[]{3, 5, 6, 77, 3}, new int[]{3, 5, 7, 79, 4}, new int[]{3, 5, 8, 81, 4}, new int[]{3, 5, 9, 78, 4}, new int[]{3, 5, 10, 76, 3}, new int[]{3, 5, 11, 71, 2}, new int[]{3, 5, 12, 64, 2}, new int[]{3, 6, 7, 86, 6}, new int[]{3, 6, 8, 85, 6}, new int[]{3, 6, 9, 83, 5}, new int[]{3, 6, 10, 82, 5}, new int[]{3, 6, 11, 76, 3}, new int[]{3, 6, 12, 74, 3}, new int[]{3, 7, 8, 89, 8}, new int[]{3, 7, 9, 84, 5}, new int[]{3, 7, 10, 84, 5}, new int[]{3, 7, 11, 78, 4}, new int[]{3, 7, 12, 78, 4}, new int[]{3, 8, 9, 84, 5}, new int[]{3, 8, 10, 83, 5}, new int[]{3, 8, 11, 76, 3}, new int[]{3, 8, 12, 76, 3}, new int[]{3, 9, 10, 78, 4}, new int[]{3, 9, 11, 71, 2}, new int[]{3, 9, 12, 71, 2}, new int[]{3, 10, 11, 66, 2}, new int[]{3, 10, 12, 63, 2}, new int[]{3, 11, 12, 53, 1}, new int[]{4, 5, 6, 80, 4}, new int[]{4, 5, 7, 85, 6}, new int[]{4, 5, 8, 85, 6}, new int[]{4, 5, 9, 80, 4}, new int[]{4, 5, 10, 82, 5}, new int[]{4, 5, 11, 78, 4}, new int[]{4, 5, 12, 71, 2}, new int[]{4, 6, 7, 89, 8}, new int[]{4, 6, 8, 91, 10}, new int[]{4, 6, 9, 86, 6}, new int[]{4, 6, 10, 88, 7}, new int[]{4, 6, 11, 83, 5}, new int[]{4, 6, 12, 82, 5}, new int[]{4, 7, 8, 90, 9}, new int[]{4, 7, 9, 89, 8}, new int[]{4, 7, 10, 88, 7}, new int[]{4, 7, 11, 84, 5}, new int[]{4, 7, 12, 83, 5}, new int[]{4, 8, 9, 86, 6}, new int[]{4, 8, 10, 88, 7}, new int[]{4, 8, 11, 82, 5}, new int[]{4, 8, 12, 81, 4}, new int[]{4, 9, 10, 82, 5}, new int[]{4, 9, 11, 76, 3}, new int[]{4, 9, 12, 76, 3}, new int[]{4, 10, 11, 76, 3}, new int[]{4, 10, 12, 74, 3}, new int[]{4, 11, 12, 63, 2}, new int[]{5, 6, 7, 89, 8}, new int[]{5, 6, 8, 90, 9}, new int[]{5, 6, 9, 87, 7}, new int[]{5, 6, 10, 86, 6}, new int[]{5, 6, 11, 84, 5}, new int[]{5, 6, 12, 82, 5}, new int[]{5, 7, 8, 91, 10}, new int[]{5, 7, 9, 85, 6}, new int[]{5, 7, 10, 89, 8}, new int[]{5, 7, 11, 84, 5}, new int[]{5, 7, 12, 84, 5}, new int[]{5, 8, 9, 87, 7}, new int[]{5, 8, 10, 86, 6}, new int[]{5, 8, 11, 83, 5}, new int[]{5, 8, 12, 83, 5}, new int[]{5, 9, 10, 80, 4}, new int[]{5, 9, 11, 78, 4}, new int[]{5, 9, 12, 76, 3}, new int[]{5, 10, 11, 78, 4}, new int[]{5, 10, 12, 76, 3}, new int[]{5, 11, 12, 71, 2}, new int[]{6, 7, 8, 92, 12}, new int[]{6, 7, 9, 91, 10}, new int[]{6, 7, 10, 90, 9}, new int[]{6, 7, 11, 89, 8}, new int[]{6, 7, 12, 89, 8}, new int[]{6, 8, 9, 90, 9}, new int[]{6, 8, 10, 91, 10}, new int[]{6, 8, 11, 85, 6}, new int[]{6, 8, 12, 88, 7}, new int[]{6, 9, 10, 85, 6}, new int[]{6, 9, 11, 81, 4}, new int[]{6, 9, 12, 83, 5}, new int[]{6, 10, 11, 80, 4}, new int[]{6, 10, 12, 82, 5}, new int[]{6, 11, 12, 76, 3}, new int[]{7, 8, 9, 89, 8}, new int[]{7, 8, 10, 89, 8}, new int[]{7, 8, 11, 86, 6}, new int[]{7, 8, 12, 86, 6}, new int[]{7, 9, 10, 85, 6}, new int[]{7, 9, 11, 79, 4}, new int[]{7, 9, 12, 81, 4}, new int[]{7, 10, 11, 79, 4}, new int[]{7, 10, 12, 81, 4}, new int[]{7, 11, 12, 75, 3}, new int[]{8, 9, 10, 80, 4}, new int[]{8, 9, 11, 77, 3}, new int[]{8, 9, 12, 77, 3}, new int[]{8, 10, 11, 74, 3}, new int[]{8, 10, 12, 76, 3}, new int[]{8, 11, 12, 68, 2}, new int[]{9, 10, 11, 67, 2}, new int[]{9, 10, 12, 66, 2}, new int[]{9, 11, 12, 58, 1}, new int[]{10, 11, 12, 52, 1}
     };
-    private double startGameParam = 1.255;
     private int currentStep = 0;
-
-    public Strat49() {
-    }
 
     @Override
     public int choix(Jeu j) {
-        boolean startOfTheGame = true;
-        if (j.scoreJoueurEnCours() + j.scoreAutreJoueur() >= 4) startOfTheGame = false;
+        int[][] poss = j.getPossibilite();
+        if (!init) {
+            int r1 = poss[2][0]-poss[0][0];
+
+        }
+        boolean startOfTheGame = j.scoreJoueurEnCours() + j.scoreAutreJoueur() < 4;
 
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
@@ -170,7 +173,10 @@ public class Strat49 implements Strategie {
 
         for (int[] bonze : bonzes) {
             if (bonze[0] == 0) continue;
-            if (maxs[bonze[0] - 2] == bonze[1]) return true;
+            if (maxs[bonze[0] - 2] == bonze[1]) {
+                currentStep = 0;
+                return true;
+            }
         }
 
         if (j.getBonzesRestants() == 0) {
@@ -194,5 +200,51 @@ public class Strat49 implements Strategie {
     @Override
     public String getName() {
         return "BOUDVILLAIN PIERRE";
+    }
+}
+
+
+class ReplicatedRandom extends Random {
+
+    // Replicate the state of a Random using two consecutive values from its nextInt
+    public boolean replicateState(int firstNextInt, int secondNextInt) {
+        return replicateState(firstNextInt, 32, secondNextInt, 32);
+    }
+
+    public boolean replicateState(int nextN, int n, int nextM, int m) {
+        // Constants copied from java.util.Random
+        final long multiplier = 0x5DEECE66DL;
+        final long addend = 0xBL;
+        final long mask = (1L << 48) - 1;
+
+        long upperMOf48Mask = ((1L << m) - 1) << (48 - m);
+
+        // next(x) is generated by taking the upper x bits of 48 bits of (oldSeed * multiplier + addend) mod (mask + 1)
+        // So now we have the upper n and m bits of two consecutive calls of next(n) and next(m)
+        long oldSeedUpperN = ((long) nextN << (48 - n)) & mask;
+        long newSeedUpperM = ((long) nextM << (48 - m)) & mask;
+
+        // Bruteforce the lower (48 - n) bits of the oldSeed that was truncated.
+        // Calculate the next seed for each guess of oldSeed and check if it has the same top m bits as our newSeed.
+        // If it does then the guess is right and we can add that to our candidate seeds.
+        ArrayList<Long> possibleSeeds = new ArrayList<>();
+        for (long oldSeed = oldSeedUpperN; oldSeed <= (oldSeedUpperN | ((1L << (48 - n)) - 1)); oldSeed++) {
+            long newSeed = (oldSeed * multiplier + addend) & mask;
+            if ((newSeed & upperMOf48Mask) == newSeedUpperM) {
+                possibleSeeds.add(newSeed);
+            }
+        }
+
+        if (possibleSeeds.size() == 1) {
+            // If there's only one candidate seed, then we found it!
+            setSeed(possibleSeeds.get(0) ^ multiplier); // setSeed(x) sets seed to `(x ^ multiplier) & mask`, so we need another `^ multiplier` to cancel it out
+            return true;
+        }
+        if (possibleSeeds.size() >= 1) {
+            System.out.println("Didn't find a unique seed. Possible seeds were: " + possibleSeeds);
+        } else {
+            System.out.println("Failed to find seed!");
+        }
+        return false;
     }
 }
