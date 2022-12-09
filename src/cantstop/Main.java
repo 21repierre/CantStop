@@ -26,12 +26,5 @@ public class Main {
             j.runIA(stratToTest, 10000);
             Strat49.PARAM += 0.001;
         }
-        //j.runIA(stratToTest, 10000);
-
-        // Humain vs IA avec le numéro d'IA en paramètre
-        //j.runHvsIA(0);
-
-        // Partie "normale"
-        //j.run();
     }
 }
