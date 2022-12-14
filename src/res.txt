@@ -1,0 +1,254 @@
+Démarrage du dernier run à : 2022/12/14 16:02:39
+Stratégies lancées : [11, 12, 13, 15, 17, 18, 22, 25, 26, 27, 29, 31, 37, 41, 43, 44, 45, 46, 47, 49, 51, 52, 55, 56, 60, 63, 67, 69, 72, 75, 76, 80, 83, 85, 88, 90, 91, 93, 97, 100, 102, 104, 111, 115, 118, 119, 121, 122, 123, 124, 129, 132, 133, 135, 139, 143, 144, 145, 147, 148, 150, 151, 152, 154, 159, 160, 164, 165, 169, 172, 174, 176, 182, 186, 188, 191, 192, 193, 194, 195, 196, 197, 199, 202, 211, 212, 214, 219, 220, 221, 229, 234, 236, 237, 239, 240, 241, 246, 250, 251, 254, 255, 257, 259, 260, 263, 264, 265, 268, 270, 272, 274, 275, 276, 277, 279, 280, 281, 282, 283, 284, 286, 288, 289, 291, 293, 296, 298, 299, 300, 301, 304, 307, 309, 311, 314, 318, 321, 322, 323, 325, 326, 327, 328, 329, 330, 331, 333, 335, 337, 339, 341, 343, 344, 345, 348, 350, 353]
+Strat 12 (Baptiste Bary ) échoue face à 0 (Stratégie mauvaise) : victoires : 1665 / défaites : 8335
+ARNAUD BAYCE-CHALVIN (27)	0	(363199 / 671566)	0	51	
+HUGO DEROO (111)	1	(336078 / 675005)	2	48	
+JULIEN NAMYST (240)	1	(402381 / 616208)	4	46	
+PIERRE GROUAS (151)	2	(405235 / 634804)	9	40	
+NINON ROLLET (272)	2	(427275 / 596160)	11	38	
+Mattéo CAUX (67)	2	(401646 / 615618)	11	38	
+MARIE DI NUNNO (115)	3	(377861 / 650882)	7	41	
+Jean de Lavallade (100)	3	(378211 / 651099)	8	40	
+MATHIAS DUFLO (122)	3	(378684 / 650949)	9	39	
+LUC MOREAU (234)	3	(395563 / 637158)	10	38	
+LOICK GACEK (139)	3	(447395 / 584624)	11	37	
+Matthias ELLERO (133)	4	(420149 / 632984)	9	38	
+ SAMUEL GUAQUIERE  (152)	6	(424520 / 628121)	7	38	
+AMBRE CAGLIERO (63)	6	(443857 / 587516)	8	37	
+CLEMENT DELBREIL (104)	12	(458844 / 592181)	5	34	
+Simon Roux-Lasfargeas (279)	14	(470930 / 574404)	6	31	
+Grégoire PAUL v2 (246)	14	(500110 / 571137)	6	31	
+Nathan Malengreau (219)	14	(474432 / 580393)	6	31	
+ALEXIS BORD (47)	15	(495194 / 565749)	6	30	
+HAMZA ARIF (335)	15	(502390 / 571821)	7	29	
+Paul-Arthur Poitevin (257)	15	(517141 / 546061)	9	27	
+LOUISE TALBI (300)	19	(519111 / 554018)	6	26	
+ARISTIDE DOSSOU-YOVO (118)	19	(509354 / 548245)	7	25	
+NICOLAS ARNAL (22)	19	(548314 / 539045)	9	23	
+YOUENN LE GALL (195)	20	(543058 / 538653)	9	22	
+NATHAN BOULLIER (52)	21	(531257 / 533201)	6	24	
+AMBRE BIGNON (43)	22	(523924 / 541338)	7	22	
+RÉMY LOURME (211)	23	(540340 / 518579)	6	22	
+NILS CHABOT (69)	26	(560479 / 497724)	8	17	
+CHARLES SENECAT (288)	26	(544702 / 484569)	13	12	
+EDGARD COSSON (85)	27	(554606 / 508129)	6	18	
+Donia SAKJI v2822 (282)	27	(553785 / 475346)	13	11	
+RONAEL DUCASSE (121)	27	(573259 / 464167)	15	9	
+ANTHONY MICELI (229)	28	(569342 / 491405)	6	17	
+ARSENE MAGNEN (214)	29	(584279 / 473583)	9	13	
+Jonathan SOETE (293)	31	(590650 / 462574)	10	10	
+Lilou PETITCOLAS--LASSALLE (250)	31	(595273 / 448655)	12	8	
+Paul BRUETSCHY (60)	31	(594858 / 455727)	13	7	
+Axel Chandelier (72)	31	(591880 / 448695)	14	6	
+LUCAS HAUSERMANN (165)	32	(618906 / 434361)	13	6	
+LANDY Nicolas (193)	34	(625115 / 429971)	10	7	
+Zaynab Ait Ahmed (17)	35	(623265 / 426767)	8	8	
+INES EL HADRI (129)	36	(579592 / 399703)	15	0	
+Timothe KOBAK (186)	37	(566838 / 397931)	14	0	
+Nathan Rousseau (277)	39	(635535 / 430895)	8	4	
+Louis MARANT (221)	39	(623352 / 420446)	9	3	
+AURELIEN TERRADES (304)	39	(576869 / 391487)	12	0	
+JEANNE GUIGNOT (154)	41	(624196 / 407158)	10	0	
+TRISTAN CHAUVEAU (76)	43	(642822 / 394367)	7	1	
+EVAN DENIS (88)	44	(626291 / 384356)	7	0	
+Rémi TROUILLARD (314)	44	(659417 / 366335)	7	0	
+Amandine ROURE (275)	45	(616331 / 366225)	6	0	
+--------- Strat prof --------- Basique --------- Pallier : 8 (indicatif) 
+Strat 11 (PB v2) échoue face à 7 (Humeau Minimale) : victoires : 4185 / défaites : 5815
+Strat 15 (NAEL ABDENBI v3) échoue face à 7 (Humeau Minimale) : victoires : 2523 / défaites : 7477
+Strat 18 ( Jonathan ALBECQ ) échoue face à 7 (Humeau Minimale) : victoires : 2851 / défaites : 7149
+Strat 25 (LUCAS BARRAUD) échoue face à 7 (Humeau Minimale) : victoires : 4154 / défaites : 5846
+Strat 29 (NAIM v2.4) échoue face à 7 (Humeau Minimale) : victoires : 4227 / défaites : 5773
+Strat 31 (LOUISE BECU v5) échoue face à 7 (Humeau Minimale) : victoires : 4254 / défaites : 5746
+Strat 41 (THANYAMONE BESSON) échoue face à 7 (Humeau Minimale) : victoires : 2415 / défaites : 7585
+Strat 46 (THEO BONNEROT-FESTA) échoue face à 7 (Humeau Minimale) : victoires : 3065 / défaites : 6935
+Strat 49 (BOUDVILLAIN PIERRE) échoue face à 7 (Humeau Minimale) : victoires : 3965 / défaites : 6035
+Strat 51 (NOAH BOULEDROUA) échoue face à 7 (Humeau Minimale) : victoires : 2942 / défaites : 7058
+Strat 55 (YANIS BOUZAIDI 2) échoue face à 7 (Humeau Minimale) : victoires : 3189 / défaites : 6811
+Strat 80 (JULES CHOUAKI) échoue face à 7 (Humeau Minimale) : victoires : 2562 / défaites : 7438
+Strat 83 (VIRGILE COPIN) échoue face à 7 (Humeau Minimale) : victoires : 4036 / défaites : 5964
+Strat 90 (ERWAN COYAUD) échoue face à 7 (Humeau Minimale) : victoires : 3753 / défaites : 6247
+Strat 91 (Augustin CUCCHI) échoue face à 7 (Humeau Minimale) : victoires : 3619 / défaites : 6381
+Strat 93 (VICTOR CURTIL v0.2) échoue face à 7 (Humeau Minimale) : victoires : 3851 / défaites : 6149
+Strat 97 (AFSHINE DAURELLE) échoue face à 7 (Humeau Minimale) : victoires : 2784 / défaites : 7216
+Strat 102 (COUDIERE AUDRY) échoue face à 7 (Humeau Minimale) : victoires : 2697 / défaites : 7303
+Strat 119 (DROUIN Mehdi) échoue face à 7 (Humeau Minimale) : victoires : 3509 / défaites : 6491
+Strat 123 (ANTOINE DUFLOS) échoue face à 7 (Humeau Minimale) : victoires : 4175 / défaites : 5825
+Strat 124 (Henri DUJARRIER 2) échoue face à 7 (Humeau Minimale) : victoires : 2608 / défaites : 7392
+Strat 132 (GUILLAUME FEMMINELLA) échoue face à 7 (Humeau Minimale) : victoires : 2732 / défaites : 7268
+Strat 135 (CAMILLE FOREST) échoue face à 7 (Humeau Minimale) : victoires : 2225 / défaites : 7775
+Strat 143 (CLARICE GOULET) échoue face à 7 (Humeau Minimale) : victoires : 2586 / défaites : 7414
+Strat 144 (ANTONIN GOURAUD) échoue face à 7 (Humeau Minimale) : victoires : 3587 / défaites : 6413
+Strat 145 (Gaspard GOURAUD) échoue face à 7 (Humeau Minimale) : victoires : 4152 / défaites : 5848
+Strat 147 (PIERRE GRANDIN) échoue face à 7 (Humeau Minimale) : victoires : 2325 / défaites : 7675
+Strat 150 (YANN GRINDA) échoue face à 7 (Humeau Minimale) : victoires : 3526 / défaites : 6474
+Strat 159 (MAXIME HABIBIAN) échoue face à 7 (Humeau Minimale) : victoires : 2846 / défaites : 7154
+Strat 160 (MATHIS HADINGER) échoue face à 7 (Humeau Minimale) : victoires : 4140 / défaites : 5860
+Strat 164 (SELIM HASSANI) échoue face à 7 (Humeau Minimale) : victoires : 2953 / défaites : 7047
+Strat 172 (GABRIEL IVANES) échoue face à 7 (Humeau Minimale) : victoires : 3672 / défaites : 6328
+Strat 174 (LOUIS JAHAN) échoue face à 7 (Humeau Minimale) : victoires : 3001 / défaites : 6999
+Strat 182 (MIKAEL KARADEMIR v2) échoue face à 7 (Humeau Minimale) : victoires : 4002 / défaites : 5998
+Strat 188 (NIRANJAN KULKARNI) échoue face à 7 (Humeau Minimale) : victoires : 3530 / défaites : 6470
+Strat 191 (ROMAIN LAGORSS v3) échoue face à 7 (Humeau Minimale) : victoires : 3221 / défaites : 6779
+Strat 192 (LISE LANCELIN) échoue face à 7 (Humeau Minimale) : victoires : 3147 / défaites : 6853
+Strat 194 (EMMA LARCHE) échoue face à 7 (Humeau Minimale) : victoires : 2988 / défaites : 7012
+Strat 196 (GUILLAUME LE MARCHAND) échoue face à 7 (Humeau Minimale) : victoires : 2388 / défaites : 7612
+Strat 197 (BAPTISTE LE MORVAN<) échoue face à 7 (Humeau Minimale) : victoires : 3227 / défaites : 6773
+Strat 199 (ARNAUD LEBAUDY) échoue face à 7 (Humeau Minimale) : victoires : 3931 / défaites : 6069
+Strat 202 (François LEMERCIER) échoue face à 7 (Humeau Minimale) : victoires : 3807 / défaites : 6193
+Strat 212 (Hugues LUROIS) échoue face à 7 (Humeau Minimale) : victoires : 3182 / défaites : 6818
+Strat 220 (THIBAULT MANSOT) échoue face à 7 (Humeau Minimale) : victoires : 3449 / défaites : 6551
+Strat 237 (ROMAIN MRAD) échoue face à 7 (Humeau Minimale) : victoires : 4114 / défaites : 5886
+Strat 239 (ahmed NAIDJAH) échoue face à 7 (Humeau Minimale) : victoires : 3702 / défaites : 6298
+Strat 251 (Mathieu PHILIPPOT 2.0) échoue face à 7 (Humeau Minimale) : victoires : 3204 / défaites : 6796
+Strat 259 (ALBAN PONGE) échoue face à 7 (Humeau Minimale) : victoires : 3071 / défaites : 6929
+Strat 260 (EMILIE POSIERE) échoue face à 7 (Humeau Minimale) : victoires : 2942 / défaites : 7058
+Strat 265 (ISAAC RAZAFINDRALAMBO) échoue face à 7 (Humeau Minimale) : victoires : 3091 / défaites : 6909
+Strat 270 (Ida Roda) échoue face à 7 (Humeau Minimale) : victoires : 4153 / défaites : 5847
+Strat 280 (ANNA RUIZ) échoue face à 7 (Humeau Minimale) : victoires : 2936 / défaites : 7064
+Strat 281 (Simon SABBAN) échoue face à 7 (Humeau Minimale) : victoires : 4277 / défaites : 5723
+Strat 284 (charles thibault sanchez) échoue face à 7 (Humeau Minimale) : victoires : 3070 / défaites : 6930
+Strat 286 (ROMAIN SCHNEIDER) échoue face à 7 (Humeau Minimale) : victoires : 3267 / défaites : 6733
+Strat 289 (ELIOT SHAW v2) échoue face à 7 (Humeau Minimale) : victoires : 2696 / défaites : 7304
+Strat 291 (NATHAN SIEBATCHEU V2.5) échoue face à 7 (Humeau Minimale) : victoires : 4070 / défaites : 5930
+Strat 301 (VALENTIN TALIO) échoue face à 7 (Humeau Minimale) : victoires : 3732 / défaites : 6268
+Strat 307 (Ilyès Théry) échoue face à 7 (Humeau Minimale) : victoires : 3026 / défaites : 6974
+Strat 309 (VINCENT TOSSOU v1) échoue face à 7 (Humeau Minimale) : victoires : 4339 / défaites : 5661
+Strat 311 (NICOLAS STOCKINGER) échoue face à 7 (Humeau Minimale) : victoires : 2338 / défaites : 7662
+Strat 318 (ELIOTT VASLIN v2) échoue face à 7 (Humeau Minimale) : victoires : 4139 / défaites : 5861
+Strat 321 (ELIAS VIGNAUD 4) échoue face à 7 (Humeau Minimale) : victoires : 3806 / défaites : 6194
+Strat 323 (MATHIEU VITELLARO) échoue face à 7 (Humeau Minimale) : victoires : 4245 / défaites : 5755
+Strat 325 (Noa Willeman 2.0) échoue face à 7 (Humeau Minimale) : victoires : 2335 / défaites : 7665
+Strat 327 (JEAN-GUY WINTREBERT ) échoue face à 7 (Humeau Minimale) : victoires : 3183 / défaites : 6817
+Strat 328 (JASON WÜRSTEN) échoue face à 7 (Humeau Minimale) : victoires : 3665 / défaites : 6335
+Strat 329 (MOHAMMED-SAMI YAKINE V2) échoue face à 7 (Humeau Minimale) : victoires : 2251 / défaites : 7749
+Strat 331 (Sultan Yusurov) échoue face à 7 (Humeau Minimale) : victoires : 2800 / défaites : 7200
+Strat 337 (CLEMENT BAUDOIN V3.5) échoue face à 7 (Humeau Minimale) : victoires : 3027 / défaites : 6973
+Strat 339 (Raphaël DESCHILDRE) échoue face à 7 (Humeau Minimale) : victoires : 3308 / défaites : 6692
+Strat 341 (MAHAMMED EL SHARKAWY)) échoue face à 7 (Humeau Minimale) : victoires : 2669 / défaites : 7331
+Strat 343 (Diane Hamlat) échoue face à 7 (Humeau Minimale) : victoires : 2291 / défaites : 7709
+Strat 344 (ESTEBAN HERNANDEZ) échoue face à 7 (Humeau Minimale) : victoires : 4079 / défaites : 5921
+Strat 345 (Aurelien MAGINOT) échoue face à 7 (Humeau Minimale) : victoires : 2750 / défaites : 7250
+Strat 348 (Luka Pascual) échoue face à 7 (Humeau Minimale) : victoires : 3608 / défaites : 6392
+Strat 353 (PRUNE WONG) échoue face à 7 (Humeau Minimale) : victoires : 3992 / défaites : 6008
+NICOLAS STOCKINGER (311)	0	(629230 / 903506)	4	72	
+Noa Willeman 2.0 (325)	0	(660939 / 897167)	19	57	
+MAHAMMED EL SHARKAWY) (341)	0	(699955 / 861652)	24	52	
+LISE LANCELIN (192)	0	(681081 / 793373)	33	43	
+Diane Hamlat (343)	1	(654031 / 904158)	16	59	
+MOHAMMED-SAMI YAKINE V2 (329)	1	(677823 / 910863)	16	59	
+CAMILLE FOREST (135)	1	(661637 / 915870)	16	59	
+GUILLAUME LE MARCHAND (196)	1	(682948 / 881812)	19	56	
+PIERRE GRANDIN (147)	1	(696590 / 900573)	19	56	
+COUDIERE AUDRY (102)	1	(704015 / 881155)	23	52	
+NOAH BOULEDROUA (51)	1	(707384 / 839935)	29	46	
+MAXIME HABIBIAN (159)	1	(711353 / 850547)	31	44	
+charles thibault sanchez (284)	1	(747534 / 807805)	39	36	
+Mathieu PHILIPPOT 2.0 (251)	1	(703622 / 770770)	41	34	
+BAPTISTE LE MORVAN< (197)	1	(702715 / 783376)	42	33	
+AFSHINE DAURELLE (97)	2	(714552 / 859076)	29	45	
+ Jonathan ALBECQ  (18)	2	(702476 / 829258)	31	43	
+Ilyès Théry (307)	2	(716760 / 844792)	32	42	
+JULES CHOUAKI (80)	3	(682288 / 878925)	23	50	
+CLARICE GOULET (143)	4	(690540 / 868346)	25	47	
+Henri DUJARRIER 2 (124)	6	(711029 / 864726)	26	44	
+THANYAMONE BESSON (41)	7	(695674 / 879092)	20	49	
+ANNA RUIZ (280)	7	(720194 / 830122)	29	40	
+CLEMENT BAUDOIN V3.5 (337)	7	(723251 / 803431)	34	35	
+ELIOT SHAW v2 (289)	9	(738913 / 833136)	29	38	
+NIRANJAN KULKARNI (188)	9	(740092 / 735461)	50	17	
+DROUIN Mehdi (119)	10	(749305 / 747097)	43	23	
+NAEL ABDENBI v3 (15)	11	(737879 / 816060)	28	37	
+ALBAN PONGE (259)	12	(733072 / 827473)	28	36	
+GUILLAUME FEMMINELLA (132)	13	(776333 / 828563)	30	33	
+EMMA LARCHE (194)	13	(750245 / 816897)	31	32	
+GABRIEL IVANES (172)	13	(735235 / 741831)	42	21	
+Sultan Yusurov (331)	15	(767703 / 840487)	28	33	
+SELIM HASSANI (164)	15	(748148 / 823608)	29	32	
+Aurelien MAGINOT (345)	17	(763561 / 830377)	26	33	
+THEO BONNEROT-FESTA (46)	17	(762509 / 789998)	31	28	
+YANIS BOUZAIDI 2 (55)	19	(766111 / 787804)	31	26	
+ELIAS VIGNAUD 4 (321)	19	(760103 / 718630)	42	15	
+EMILIE POSIERE (260)	21	(767129 / 805108)	27	28	
+JEAN-GUY WINTREBERT  (327)	21	(771666 / 790436)	28	27	
+LOUIS JAHAN (174)	22	(790110 / 802752)	28	26	
+JASON WÜRSTEN (328)	22	(784019 / 760673)	33	21	
+ROMAIN SCHNEIDER (286)	26	(796635 / 788724)	29	21	
+ISAAC RAZAFINDRALAMBO (265)	27	(784911 / 793917)	25	24	
+ROMAIN LAGORSS v3 (191)	28	(814563 / 781708)	26	22	
+ahmed NAIDJAH (239)	29	(796832 / 755151)	30	17	
+THIBAULT MANSOT (220)	32	(791789 / 749634)	25	19	
+YANN GRINDA (150)	32	(812649 / 770287)	29	15	
+LUCAS BARRAUD (25)	32	(794877 / 699254)	38	6	
+Raphaël DESCHILDRE (339)	35	(809822 / 765303)	22	19	
+Hugues LUROIS (212)	36	(825500 / 764312)	21	19	
+Gaspard GOURAUD (145)	36	(796292 / 695105)	35	5	
+Augustin CUCCHI (91)	39	(831567 / 733321)	26	11	
+MIKAEL KARADEMIR v2 (182)	39	(808247 / 698250)	33	4	
+ANTONIN GOURAUD (144)	40	(819708 / 719579)	30	6	
+ARNAUD LEBAUDY (199)	41	(814910 / 686860)	35	0	
+VALENTIN TALIO (301)	42	(840699 / 734577)	25	9	
+Ida Roda (270)	42	(806521 / 675614)	34	0	
+ERWAN COYAUD (90)	44	(841159 / 719520)	26	6	
+Luka Pascual (348)	46	(853617 / 728258)	24	6	
+BOUDVILLAIN PIERRE (49)	47	(866276 / 754068)	29	0	
+VICTOR CURTIL v0.2 (93)	48	(856725 / 716635)	25	3	
+PRUNE WONG (353)	48	(837522 / 698292)	26	2	
+VIRGILE COPIN (83)	48	(822992 / 681092)	27	1	
+MATHIEU VITELLARO (323)	49	(820650 / 659308)	27	0	
+ESTEBAN HERNANDEZ (344)	50	(846688 / 686550)	25	1	
+François LEMERCIER (202)	51	(860901 / 709116)	22	3	
+LOUISE BECU v5 (31)	51	(841449 / 670041)	25	0	
+MATHIS HADINGER (160)	52	(858523 / 677179)	24	0	
+ELIOTT VASLIN v2 (318)	53	(856834 / 674088)	23	0	
+ROMAIN MRAD (237)	54	(868818 / 660739)	22	0	
+NAIM v2.4 (29)	55	(872481 / 661558)	21	0	
+ANTOINE DUFLOS (123)	56	(861183 / 667009)	20	0	
+PB v2 (11)	57	(886548 / 666492)	19	0	
+VINCENT TOSSOU v1 (309)	61	(884643 / 635182)	15	0	
+NATHAN SIEBATCHEU V2.5 (291)	61	(924899 / 643727)	15	0	
+Simon SABBAN (281)	62	(894707 / 644720)	14	0	
+--------- Strat prof --------- Humeau Minimal --------- Pallier : 11 (indicatif) 
+Strat 45 (STRAT TEST) échoue face à 6 (Franck Tempet) : victoires : 4275 / défaites : 5725
+Strat 75 (ANTHONY CHARREYRON) échoue face à 6 (Franck Tempet) : victoires : 4229 / défaites : 5771
+Strat 255 (BAPTISTE PLAGNE V1.8) échoue face à 6 (Franck Tempet) : victoires : 4219 / défaites : 5781
+Strat 298 (LUCIEN STOVEN) échoue face à 6 (Franck Tempet) : victoires : 4148 / défaites : 5852
+Strat 322 (MATEO VILLAIN) échoue face à 6 (Franck Tempet) : victoires : 4304 / défaites : 5696
+Strat 333 (Boouby) échoue face à 6 (Franck Tempet) : victoires : 4305 / défaites : 5695
+Strat 350 (ENZO SCHREYER) échoue face à 6 (Franck Tempet) : victoires : 4270 / défaites : 5730
+ENZO SCHREYER (350)	0	(61512 / 60291)	6	0	
+Boouby (333)	0	(62186 / 59357)	6	0	
+MATEO VILLAIN (322)	0	(58782 / 59278)	6	0	
+LUCIEN STOVEN (298)	0	(56934 / 60493)	6	0	
+BAPTISTE PLAGNE V1.8 (255)	0	(61920 / 60341)	6	0	
+ANTHONY CHARREYRON (75)	0	(57793 / 60082)	6	0	
+STRAT TEST (45)	0	(61111 / 60396)	6	0	
+--------- Strat prof --------- Franck1 --------- Pallier : 11 (indicatif) 
+Strat 241 (LUCAS NAURY6) échoue face à 5 (Humeau 3) : victoires : 4283 / défaites : 5717
+LUCAS NAURY6 (241)	0	(0 / 0)	0	0	
+--------- Strat prof --------- Jérémie1 --------- Pallier : 13 (indicatif) 
+Strat 37 (Victor Berhault V3.2) échoue face à 4 (Franck Tempet) : victoires : 4236 / défaites : 5764
+Strat 44 (LOUIS BLIN Vfinal) échoue face à 4 (Franck Tempet) : victoires : 4248 / défaites : 5752
+Strat 56 (Kristian Bouvet) échoue face à 4 (Franck Tempet) : victoires : 4183 / défaites : 5817
+Strat 148 (TEST) échoue face à 4 (Franck Tempet) : victoires : 4279 / défaites : 5721
+Strat 264 (MAHO RANDRIA) échoue face à 4 (Franck Tempet) : victoires : 4242 / défaites : 5758
+Strat 268 (LOUISON RIBOUCHON3) échoue face à 4 (Franck Tempet) : victoires : 3922 / défaites : 6078
+Strat 276 (DORIAN ROUSSE) échoue face à 4 (Franck Tempet) : victoires : 4103 / défaites : 5897
+Strat 299 (BALTHAZAR TACK) échoue face à 4 (Franck Tempet) : victoires : 4187 / défaites : 5813
+Strat 326 (Adrien WILS) échoue face à 4 (Franck Tempet) : victoires : 4042 / défaites : 5958
+Strat 330 (CHRISTOPHE YE v3) échoue face à 4 (Franck Tempet) : victoires : 4297 / défaites : 5703
+CHRISTOPHE YE v3 (330)	0	(87312 / 89584)	9	0	
+Adrien WILS (326)	0	(91630 / 91924)	9	0	
+BALTHAZAR TACK (299)	0	(95246 / 90171)	9	0	
+DORIAN ROUSSE (276)	0	(87845 / 90919)	9	0	
+LOUISON RIBOUCHON3 (268)	0	(89186 / 93360)	9	0	
+MAHO RANDRIA (264)	0	(91663 / 89841)	9	0	
+TEST (148)	0	(92005 / 90330)	9	0	
+Kristian Bouvet (56)	0	(91235 / 91732)	9	0	
+LOUIS BLIN Vfinal (44)	0	(89613 / 89024)	9	0	
+Victor Berhault V3.2 (37)	0	(89802 / 88652)	9	0	
+--------- Strat prof --------- Franck2 --------- Pallier : 16 (indicatif) 
+KEVIN STEFFTGEN (296)	0	(20238 / 19400)	2	0	
+ELIE SALEH (283)	0	(18927 / 20445)	2	0	
+plat j'y a (13)	0	(20172 / 19492)	2	0	
+Fin du dernier run à : 2022/12/14 22:04:23
