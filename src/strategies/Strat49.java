@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Strat49 implements Strategie {
-    public static double PARAM = 0.87;
+    public static double PARAM = 17d;
     private final Random rng = new Random();
     private final double startGameParam = 1.255;
     int[][] stats = new int[][]{
@@ -26,6 +26,7 @@ public class Strat49 implements Strategie {
     @Override
     public int choix(Jeu j) {
         boolean startOfTheGame = j.scoreJoueurEnCours() + j.scoreAutreJoueur() < 4;
+        startOfTheGame = false;
 
         int[][] choix = j.getLesChoix();
         int[][] bonzes = j.getBonzes();
@@ -71,15 +72,15 @@ public class Strat49 implements Strategie {
 
             // En "debut" de partie favorise les colonnes courtes / apres favorise les colonnes longues
             if (choix[i][0] <= 5 || choix[i][0] >= 9) {
-                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
+                scores[i] *= startOfTheGame ? 1.255 : 1d / 1.255;
             } else {
-                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
+                scores[i] *= !startOfTheGame ? 1.255 : 1d / 1.255;
             }
 
             if (choix[i][1] <= 5 || choix[i][1] >= 9) {
-                scores[i] *= startOfTheGame ? startGameParam : 1d / startGameParam;
+                scores[i] *= startOfTheGame ? 1.255 : 1d / 1.255;
             } else {
-                scores[i] *= !startOfTheGame ? startGameParam : 1d / startGameParam;
+                scores[i] *= !startOfTheGame ? 1.255 : 1d / 1.255;
             }
             // Si je complete la colonne
             if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
@@ -115,15 +116,29 @@ public class Strat49 implements Strategie {
         int[][] bonzes = j.getBonzes();
         int[] maxs = j.getMaximum();
 
-        for (int[] bonze : bonzes) {
-            if (bonze[0] == 0) continue;
-            if (maxs[bonze[0] - 2] == bonze[1]) {
+
+        if (j.getBonzesRestants() == 0) {
+            int bonzeFinish= 0;
+            for (int[] bonze : bonzes) {
+                if (bonze[0] == 0) continue;
+                if (maxs[bonze[0] - 2] == bonze[1] ) {
+                    //currentStep = 0;
+                    //return true;
+                    bonzeFinish++;
+                }
+            }
+            if (bonzeFinish>=2) {
                 currentStep = 0;
                 return true;
             }
-        }
+            if (bonzeFinish == 1) {
+                if (j.scoreJoueurEnCours() == 2 && j.scoreAutreJoueur() <1) {
+                    return false;
+                }
+                currentStep = 0;
+                return true;
+            }
 
-        if (j.getBonzesRestants() == 0) {
             if (j.scoreAutreJoueur() == 2) return false;
             int[] ids = Arrays.stream(new int[]{bonzes[0][0], bonzes[1][0], bonzes[2][0]}).sorted().toArray();
             for (int[] stat : probas3) {
