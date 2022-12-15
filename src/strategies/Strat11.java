@@ -117,10 +117,13 @@ public class Strat11 implements Strategie {
             if (myProgress[choix[bestChoice][0] - 2] == 0) cantStop += 2 * cantStops[choix[bestChoice][0] - 2];
             else cantStop += cantStops[choix[bestChoice][0] - 2];
         }*/
-        cantStop += (100 - stats[choix[bestChoice][1] - 2]);
+        //cantStop += (100 - stats[choix[bestChoice][1] - 2]);
+        double tmp = stats[choix[bestChoice][1] - 2];
         if (choix[bestChoice][0] != 0) {
-            cantStop += (100 - stats[choix[bestChoice][0] - 2]);
+            //cantStop += (100 - stats[choix[bestChoice][0] - 2]);
+            tmp += stats[choix[bestChoice][0] - 2] - stats[choix[bestChoice][1] - 2] * stats[choix[bestChoice][0] - 2];
         }
+        cantStop *= tmp;
 
         return bestChoice;
     }

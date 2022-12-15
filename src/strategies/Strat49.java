@@ -36,7 +36,7 @@ public class Strat49 implements Strategie {
             else oProg += otProgress[i];
         }
         if (nbTours >= 20) {
-            againstMiddle = midProg > oProg;
+            //againstMiddle = midProg > oProg;
         }
 
         int bestChoice = 0;
