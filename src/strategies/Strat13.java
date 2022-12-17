@@ -6,22 +6,22 @@ import cantstop.Jeu;
  * @author Pierre Boudvillain <pierre.boudvil1@gmail.com>
  * @project CorrectionTP4
  */
-public class Strat11 implements Strategie {
+public class Strat13 implements Strategie {
 
+    public static double PARAM = 300;
+    public static double failed = 0;
+    public static int nbTours = 0;
     private static boolean againstMiddle = false;
-    double cantStop = 1;
+    double cantStop = 0;
     int[] cantStops = new int[]{6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6};
     double[] stats = new double[]{13.194444444444445, 23.30246913580247, 35.57098765432099, 44.75308641975309, 56.09567901234568, 64.35185185185185, 56.09567901234568, 44.75308641975309, 35.57098765432099, 23.30246913580247, 13.194444444444445};
-    public static int nbTours = 0;
     private int midProg = 0;
     private int oProg = 0;
-
-    public static double failed = 0;
 
     @Override
     public int choix(Jeu j) {
         if (j.getBonzesRestants() == 3 && cantStop != 0) {
-            cantStop = 1;
+            cantStop = 0;
             nbTours++;
             failed++;
         }
@@ -120,13 +120,10 @@ public class Strat11 implements Strategie {
             if (myProgress[choix[bestChoice][0] - 2] == 0) cantStop += 2 * cantStops[choix[bestChoice][0] - 2];
             else cantStop += cantStops[choix[bestChoice][0] - 2];
         }*/
-        //cantStop += (100 - stats[choix[bestChoice][1] - 2]);
-        double tmp = stats[choix[bestChoice][1] - 2] / 100d;
+        cantStop += (100 - stats[choix[bestChoice][1] - 2]);
         if (choix[bestChoice][0] != 0) {
-            //cantStop += (100 - stats[choix[bestChoice][0] - 2]);
-            tmp += stats[choix[bestChoice][0] - 2] / 100d - stats[choix[bestChoice][1] - 2] / 100d * stats[choix[bestChoice][0] - 2] / 100d;
+            cantStop += (100 - stats[choix[bestChoice][0] - 2]);
         }
-        cantStop *= tmp;
 
         return bestChoice;
     }
@@ -140,15 +137,14 @@ public class Strat11 implements Strategie {
             for (int[] bonze : bonzes) {
                 if (bonze[0] == 0) continue;
                 if (maxs[bonze[0] - 2] == bonze[1]) {
-                    cantStop = 1;
+                    cantStop = 0;
                     nbTours++;
                     return true;
                 }
             }
             if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
-            //System.out.println(cantStop);
-            if (cantStop < 0.0124) {
-                cantStop = 1;
+            if (cantStop > 300) {
+                cantStop = 0;
                 nbTours++;
                 return true;
             }
@@ -158,6 +154,6 @@ public class Strat11 implements Strategie {
 
     @Override
     public String getName() {
-        return "PB v2";
+        return "BP v2.13";
     }
 }

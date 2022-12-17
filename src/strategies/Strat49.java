@@ -8,12 +8,13 @@ import cantstop.Jeu;
  */
 public class Strat49 implements Strategie {
 
-    public static double PARAM = 0;
+    public static double PARAM = 300;
+    public static double failed = 0;
+    public static int nbTours = 0;
     private static boolean againstMiddle = false;
     double cantStop = 0;
     int[] cantStops = new int[]{6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6};
     double[] stats = new double[]{13.194444444444445, 23.30246913580247, 35.57098765432099, 44.75308641975309, 56.09567901234568, 64.35185185185185, 56.09567901234568, 44.75308641975309, 35.57098765432099, 23.30246913580247, 13.194444444444445};
-    private int nbTours = 0;
     private int midProg = 0;
     private int oProg = 0;
 
@@ -22,6 +23,7 @@ public class Strat49 implements Strategie {
         if (j.getBonzesRestants() == 3 && cantStop != 0) {
             cantStop = 0;
             nbTours++;
+            failed++;
         }
 
         int[][] choix = j.getLesChoix();
@@ -141,7 +143,7 @@ public class Strat49 implements Strategie {
                 }
             }
             if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
-            if (cantStop > 525) {
+            if (cantStop > 300) {
                 cantStop = 0;
                 nbTours++;
                 return true;
@@ -152,6 +154,6 @@ public class Strat49 implements Strategie {
 
     @Override
     public String getName() {
-        return "BP v2";
+        return "BP v2.49";
     }
 }
