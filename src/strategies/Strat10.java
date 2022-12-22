@@ -6,61 +6,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * <p>
- *     <ul>
- *         <li>
- *             Choix du bonze:
- *             <br>
- *             Chaque choix se voit attribuer un score dependant de
- *             <ol>
- *                 <li>
- *                     ma position par rapport a celle de l'adversaire divise par la longueur de la colonne
- *                 </li>
- *                 <li>
- *                     la probabilite d'obtenir cette colonne et la longueur de la colonne
- *                 </li>
- *             </ol>
- *             Pour les choix qui finissent une colonne:
- *             <ol>
- *                 <li>
- *                     1 colonne avec un choix egal (ex: 7 & 7): celui ou l'adversaire est le plus avance pour le bloquer
- *                 </li>
- *                 <li>
- *                     1 colonne avec un choix different (ex: 7 & X) ou 2 colonnes avec un choix different (7 & 8): celui de proba la plus elevee
- *                 </li>
- *             </ol>
- *             Puis on enregistre un pas de tour dependant du choix (choix du centre => pas faible)
- *         </li>
- *         <li>
- *             Stop:
- *             <br>
- *             Si on a plus de bonze a poser:
- *             <ul>
- *                 <li>
- *                     Si au moins 1 colonne est finie on stop
- *                 </li>
- *                 <li>
- *                     Si le pas de tours total est plus grand qu'une limite on stop
- *                     La limite est adaptee si on est en tete (on prend moins de risque) ou si on est derriere (on en prend plus)
- *                 </li>
- *             </ul>
- *             Sinon on continue
- *         </li>
- *     </ul>
- *
- *
- * </p>
- *
  * @author Pierre Boudvillain <pierre.boudvil1@gmail.com>
  * @project CorrectionTP4
  */
-public class Strat49 implements Strategie {
-    public static double PARAM = 12;
+public class Strat10 implements Strategie {
+
+    public static double PARAM = 7E-5;
     public static double failed = 0;
     public static int nbTours = 0;
+    private static boolean againstMiddle = false;
     double cantStop = 0;
     double[] probas = new double[]{13.194444444444445, 23.30246913580247, 35.57098765432099, 44.75308641975309, 56.09567901234568, 64.35185185185185, 56.09567901234568, 44.75308641975309, 35.57098765432099, 23.30246913580247, 13.194444444444445};
     double[] probasLength = new double[]{22.970652220507546, 6.870837971640882, 7.205621855192848, 7.201234082129267, 17.307068100887772, 32.45589863607443, 17.307068100887772, 7.201234082129267, 7.205621855192848, 6.870837971640882, 22.970652220507546};
+    private int midProg = 0;
+    private int oProg = 0;
 
     @Override
     public int choix(Jeu j) {
@@ -90,7 +49,7 @@ public class Strat49 implements Strategie {
             for (int[] bonze : bonzes) {
                 if (bonze[0] == choix[i][0]) {
                     if (choix[i][0] == choix[i][1]) {
-                        if (bonze[1] + 2 == maxs[bonze[0] - 2]) finisher.put(i, new Integer[]{2});
+                        if (bonze[1] + 2 == maxs[bonze[0] - 2]) finisher.put(i, new Integer[]{2});//return i;
                     } else if (bonze[1] + 1 == maxs[bonze[0] - 2]) {
                         finisher.put(i, new Integer[]{1, 0});
                     }
@@ -99,8 +58,7 @@ public class Strat49 implements Strategie {
                 }
                 if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
                     if (bonze[1] + 1 == maxs[bonze[0] - 2]) {
-                        if (finisher.containsKey(i)) finisher.get(i)[1] = 2;
-                        else finisher.put(i, new Integer[]{1, 1});
+                        finisher.put(i, new Integer[]{1, 1});
                     }
                     scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
                     b2 = true;
@@ -113,21 +71,33 @@ public class Strat49 implements Strategie {
                 scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
             }
             // Si je complete la colonne
+            scores[i]=0;
 
             if (choix[i][0] == choix[i][1]) {
                 if (myProgress[choix[i][0] - 2] + 2 == maxs[choix[i][0] - 2]) {
                     finisher.put(i, new Integer[]{2});
+                    //scores[i] += 10;
                 }
             } else if (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] || choix[i][1] != 0 && myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2]) {
-                if (finisher.containsKey(i)) finisher.get(i)[1] = 2;
-                else
-                    finisher.put(i, new Integer[]{1, (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] ? 0 : 1)});
+                //scores[i] += 10;
+                finisher.put(i, new Integer[]{1, (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] ? 0 : 1)});
             }
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
 
+            // FAvorise les 3 colonnes du milieu sauf si on est contre une strat full mid -> on elargie aux 2 colonnes de chaques cotes
+            /*
+            if (againstMiddle) {
+                if (choix[i][0] >= 4 && choix[i][0] <= 5 || choix[i][0] >= 9 && choix[i][0] <= 10)
+                    scores[i] *= probasLength[choix[i][0] - 2] / 80d;
+                if (choix[i][1] >= 4 && choix[i][1] <= 5 || choix[i][1] >= 9 && choix[i][1] <= 10)
+                    scores[i] *= probasLength[choix[i][1] - 2] / 80d;
+            } else {
+                if (choix[i][0] >= 6 && choix[i][0] <= 8) scores[i] += probasLength[choix[i][0] - 2] / 60d;
+                if (choix[i][1] >= 6 && choix[i][1] <= 8) scores[i] += probasLength[choix[i][1] - 2] / 60d;
+            }*/
             if (choix[i][1] != 0)
-                scores[i] += probasLength[choix[i][1] - 2] / 23d;
-            scores[i] += probasLength[choix[i][0] - 2] / 23d;
+                scores[i] += probasLength[choix[i][1] - 2] / 33d;
+            scores[i] += probasLength[choix[i][0] - 2] / 33d;
         }
         if (finisher.size() > 0) {
             if (finisher.values().stream().anyMatch(s -> s[0] == 2)) {
@@ -152,21 +122,11 @@ public class Strat49 implements Strategie {
                     if (finisher.get(i)[0] == 2) continue;
                     if (bestChoice == -1) {
                         bestChoice = i;
-                        if (finisher.get(i)[1] == 2)
-                            bestScore = probas[choix[i][finisher.get(i)[1] - 2] - 2] + probas[choix[i][finisher.get(i)[1] - 1] - 2];
-                        else
-                            bestScore = probas[choix[i][finisher.get(i)[1]] - 2];
+                        bestScore = probas[choix[i][finisher.get(i)[1]] - 2];
                         continue;
                     }
-                    double score = 0;
-                    if (finisher.get(i)[1] == 2)
-                        score = probas[choix[i][finisher.get(i)[1] - 2] - 2] + probas[choix[i][finisher.get(i)[1] - 1] - 2];
-                    else
-                        score = probas[choix[i][finisher.get(i)[1]] - 2];
-                    if (score > bestScore) {
-                        bestChoice = i;
-                        bestScore = score;
-                    }
+                    double score = probas[choix[i][finisher.get(i)[1]] - 2];
+                    if (score > bestScore) bestChoice = i;
                 }
                 return bestChoice;
             }
@@ -174,7 +134,7 @@ public class Strat49 implements Strategie {
 
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == scores[bestChoice]) {
-                // Si scores egaux on favorise les nombres pairs
+                // Si score egaux on favorise les nombres pairs
                 int c1 = 0;
                 int c2 = 0;
                 if (choix[i][0] % 2 == 0) c1++;
@@ -198,33 +158,62 @@ public class Strat49 implements Strategie {
     public boolean stop(Jeu j) {
         int[][] bonzes = j.getBonzes();
         int[] maxs = j.getMaximum();
-        boolean[] blocks = j.getBloque();
+        int[] prog = j.avancementJoueurEnCours();
         if (j.getBonzesRestants() == 0) {
+            int bonzeFinish = 0;
             for (int[] bonze : bonzes) {
                 if (bonze[0] == 0) continue;
-                if (blocks[bonze[0] - 2]) {
+                if (maxs[bonze[0] - 2] == bonze[1]) {
                     cantStop = 0;
                     nbTours++;
                     return true;
                 }
             }
-            int limit = 42;
-            if (j.scoreJoueurEnCours() < j.scoreAutreJoueur())
-                limit += j.scoreAutreJoueur() - j.scoreJoueurEnCours() + 1;
-            else if (j.scoreJoueurEnCours() > j.scoreAutreJoueur())
-                limit -= j.scoreJoueurEnCours() - j.scoreAutreJoueur() + 1;
+            //System.out.println(prog[bonzes[0][0] - 2] + " - " + bonzes[0][1]);
 
-            if (cantStop > limit) {
+            int l1 = bonzes[0][1] - prog[bonzes[0][0] - 2];
+            double c1 = Math.pow(probas[bonzes[0][0] - 2] / 100d, l1);
+            int l2 = bonzes[1][1] - prog[bonzes[1][0] - 2];
+            double c2 = Math.pow(probas[bonzes[1][0] - 2] / 100d, l2);
+            int l3 = bonzes[2][1] - prog[bonzes[2][0] - 2];
+            double c3 = Math.pow(probas[bonzes[2][0] - 2] / 100d, l3);
+            double prod = c1 * c2 * c3;
+            double prod2 = prod;
+            //System.out.println(prod);
+            prod = prod * probas[bonzes[0][0] - 2] / 100d
+                    + prod * probas[bonzes[1][0] - 2] / 100d
+                    + prod * probas[bonzes[2][0] - 2] / 100d
+                    - prod * probas[bonzes[0][0] - 2] / 100d * probas[bonzes[1][0] - 2] / 100d
+                    - prod * probas[bonzes[0][0] - 2] / 100d * probas[bonzes[2][0] - 2] / 100d
+                    - prod * probas[bonzes[1][0] - 2] / 100d * probas[bonzes[2][0] - 2] / 100d
+                    + prod * probas[bonzes[0][0] - 2] / 100d * probas[bonzes[1][0] - 2] / 100d * probas[bonzes[2][0] - 2] / 100d
+            ;
+            double paramAdapt = 0;
+            if (j.scoreJoueurEnCours() - j.scoreAutreJoueur() < 0) {
+                //vrm en retard
+                paramAdapt = -2E-5;
+            } else if (j.scoreJoueurEnCours() - j.scoreAutreJoueur() > 0) {
+                paramAdapt = PARAM;
+            }
+            //System.out.println(prod2 - prod);
+            if (prod2 - prod <= 4.9E-5 + paramAdapt) {
                 cantStop = 0;
                 nbTours++;
                 return true;
             }
+
+            //if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
+            /*if (cantStop > 28) {
+                cantStop = 0;
+                nbTours++;
+                return true;
+            }*/
         }
         return false;
     }
 
     @Override
     public String getName() {
-        return "PIERRE BOUDVILLAIN";
+        return "BP v2.49_3";
     }
 }

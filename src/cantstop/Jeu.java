@@ -1,9 +1,6 @@
 package cantstop;
 
-import strategies.Strat0;
-import strategies.Strat13;
-import strategies.Strat49;
-import strategies.Strategie;
+import strategies.*;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -762,7 +759,7 @@ public class Jeu {
             //System.out.println("X vs Y => V_X - V_Y (pts, pts)");
             for (int a = 0; a < groupes.length - 1; a++) {
                 for (int b = a + 1; b < groupes.length; b++) {
-                    //System.out.print(a + " vs " + b);
+                    //System.out.print(a + " vs " + b + " -> ");
                     stratA = (Strategie) Class.forName("strategies.Strat" + groupes[a]).getDeclaredConstructor().newInstance();
                     stratB = (Strategie) Class.forName("strategies.Strat" + groupes[b]).getDeclaredConstructor().newInstance();
 
