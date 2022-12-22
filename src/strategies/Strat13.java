@@ -2,6 +2,9 @@ package strategies;
 
 import cantstop.Jeu;
 
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
  * @author Pierre Boudvillain <pierre.boudvil1@gmail.com>
  * @project CorrectionTP4
@@ -11,140 +14,227 @@ public class Strat13 implements Strategie {
     public static double PARAM = 300;
     public static double failed = 0;
     public static int nbTours = 0;
-    private static boolean againstMiddle = false;
-    double cantStop = 0;
-    int[] cantStops = new int[]{6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6};
-    double[] stats = new double[]{13.194444444444445, 23.30246913580247, 35.57098765432099, 44.75308641975309, 56.09567901234568, 64.35185185185185, 56.09567901234568, 44.75308641975309, 35.57098765432099, 23.30246913580247, 13.194444444444445};
-    private int midProg = 0;
-    private int oProg = 0;
+
+
+    private final double risk = 2.5;
+    private final int[] maxCols = new int[]{3, 5, 7, 9, 11, 13, 11, 9, 7, 5, 3};
+    private final int bonzesRestants = 3;
+    private int[] cols = new int[11];
+    private int[] bonzes = new int[11];
+    private boolean hasCompleted = false;
+    private double remainMult = 0;
+
+    private int sliceN(Object[] arr) {
+        return 6 - (arr.length + 1);
+    }
+
+    private double getDistanceToWin(int[] cols, int[] bonzes) {
+        int ret = 0;
+        List<Double> tmp = new ArrayList<>();
+        for (int i = 0; i < cols.length; i++) {
+            tmp.add(Math.max(0d, maxCols[i] - ((cols[i] + (bonzes != null ? bonzes[i] : 0))) / (double) maxCols[i]));
+        }
+        return tmp.stream().sorted().limit(3).reduce(0d, Double::sum);
+    }
+
+    private Map<Integer, Double> nextCols(int[] choix) {
+        var ret = new HashMap<Integer, Double>();
+        for (int i = 0; i < maxCols.length; i++) {
+            final int tmp = i;
+            double add = Math.max(0, maxCols[i] - (cols[i] + bonzes[i] + Arrays.stream(choix).filter(val -> val == tmp + 2).count()));
+            ret.put(i, add * 13 / (maxCols[i] * bonzesRestants == 0 ? 1 : Math.sqrt(maxCols[i])));
+        }
+        return ret;
+    }
+
+    private double[] nextColsValues(int[] choix) {
+        var tmp = nextCols(choix);
+
+        var ret = tmp.values().stream().sorted().limit(sliceN(tmp.values().stream().filter(d -> d == 0).toArray()));
+
+        return ret.mapToDouble(d -> d).toArray();
+    }
+
+    private int[] bestColsWith(int[] cols) {
+        var sc = nextCols(cols);
+        return sc.keySet().stream().sorted().limit(sliceN(sc.values().stream().filter(c -> c == 0).toArray())).mapToInt(i -> i).toArray();
+    }
 
     @Override
     public int choix(Jeu j) {
-        if (j.getBonzesRestants() == 3 && cantStop != 0) {
-            cantStop = 0;
+        if (j.getBonzesRestants() == 3) {
+            //cantStop = 0;
             nbTours++;
             failed++;
+            hasCompleted = false;
         }
-
         int[][] choix = j.getLesChoix();
-        int[][] bonzes = j.getBonzes();
+        int[][] bz = j.getBonzes();
+
+        bonzes = new int[11];
+        for (int[] ints : bz) {
+            if (ints[0] == 0) continue;
+            bonzes[ints[0] - 2] = ints[1];
+        }
+
         int[] maxs = j.getMaximum();
-        int[] myProgress = j.avancementJoueurEnCours();
+        cols = j.avancementJoueurEnCours();
         int[] otProgress = j.avancementAutreJoueur();
+        int bestChoice;
 
+        if (j.getNbChoix() == 1) return 0;
 
-        for (int i = 0; i < otProgress.length; i++) {
-            if (i >= 4 && i <= 6) midProg += otProgress[i];
-            else oProg += otProgress[i];
-        }
-        if (nbTours >= 20) {
-            againstMiddle = midProg > oProg;
-        }
+        double myRemaining = getDistanceToWin(cols, bonzes);
+        double otRemaining = getDistanceToWin(otProgress, null);
+        remainMult = (myRemaining > otRemaining) ? 1 : (otRemaining - myRemaining) / 6 + 1;
 
-        int bestChoice = 0;
+        List<Double> scores = Arrays.stream(choix).map(ch -> {
+            int nbNewBonzes = (int) Arrays.stream(ch).filter(c -> c != 0).filter(c -> bonzes[c - 2] == 0).count();
+            return Arrays.stream(nextColsValues(ch)).reduce(0d, Double::sum) * (1 + 0.1 * nbNewBonzes);
+        }).toList();
 
-        double[] scores = new double[j.getNbChoix()];
-
-        // Chaque choix se voit attribuer un score
-        for (int i = 0; i < j.getNbChoix(); i++) {
-
-            // 1ere etape: avancement relatif par rapport a l'adversaire
-            boolean b1 = false;
-            boolean b2 = choix[i][1] == 0;
-            for (int[] bonze : bonzes) {
-                if (bonze[0] == choix[i][0]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][0] - 2]) / (double) maxs[bonze[0] - 2];
-                    b1 = true;
-                }
-                if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
-                    scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
-                    b2 = true;
+        if (j.getBonzesRestants() > 0) {
+            List<Integer> tmp = new ArrayList<>();
+            for (int[] b : bz) {
+                if (b[0] != 0) {
+                    for (int i = 0; i < b[1]; i++) {
+                        tmp.add(b[0]);
+                    }
                 }
             }
-            if (!b1) {
-                scores[i] += (myProgress[choix[i][0] - 2] - otProgress[choix[i][0] - 2]) / (double) maxs[choix[i][0] - 2];
+            int[] tmp2 = new int[tmp.size()];
+            for (int i = 0; i < tmp.size(); i++) {
+                tmp2[i] = tmp.get(i);
             }
-            if (!b2) {
-                scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
+            int[] bestCols = bestColsWith(tmp2);
+            boolean test = false;
+
+            for (int i = 0; i < j.getNbChoix(); i++) {
+                if (bonzes[choix[i][0] - 2] != 0 || choix[i][1] != 0 && bonzes[choix[i][1] - 2] != 0) {
+                    test = true;
+                    break;
+                }
+                for (int k = 0; k < bestCols.length; k++) {
+                    if (choix[i][0] == bestCols[k] || choix[i][1] == bestCols[k]) {
+                        test = true;
+                        break;
+                    }
+                }
+                if (test) break;
             }
-            if (b1 && b2) scores[i] += 5;
+            for (Double sc : scores) {
+                if (sc > 0) {
+                    test = true;
+                    break;
+                }
+            }
+            if (test) {
+                List<Integer> doubles = new ArrayList<>();
+                for (int i = 0; i < j.getNbChoix(); i++) {
+                    if (choix[i][0] == choix[i][1]) doubles.add(i);
+                }
+                if (doubles.size() > 0) {
+                    int best = doubles.get(0);
+                    //recup les doubles les plus proches de 7
+                    for (Integer db : doubles) {
+                        if (maxCols[choix[db][0] - 2] > maxCols[choix[best][0] - 2]) best = db;
+                    }
+                    return best;
+                }
 
 
-            if (choix[i][0] > choix[i][1]) {
-                int tmp = choix[i][0];
-                choix[i][0] = choix[i][1];
-                choix[i][1] = tmp;
-            }
-            // 2eme etape: probabilite de retirer cette colonne au prochina tour
-            //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+                if (hasCompleted) {
+                    final var scEmpty = nextCols(new int[1]);
+                    int best = 0;
+                    double progBest = 0;
 
-            // FAvorise les 3 colonnes du milieu sauf si on est contre une strat full mid -> on elargie aux 2 colonnes de chaques cotes
-            if (againstMiddle) {
-                if (choix[i][0] >= 4 && choix[i][0] <= 5 || choix[i][0] >= 9 && choix[i][0] <= 10)
-                    scores[i] *= stats[choix[i][0] - 2] / 23d;
-                if (choix[i][1] >= 4 && choix[i][1] <= 5 || choix[i][1] >= 9 && choix[i][1] <= 10)
-                    scores[i] *= stats[choix[i][1] - 2] / 23d;
-            } else {
-                if (choix[i][0] >= 6 && choix[i][0] <= 8) scores[i] *= stats[choix[i][0] - 2] / 23d;
-                if (choix[i][1] >= 6 && choix[i][1] <= 8) scores[i] *= stats[choix[i][1] - 2] / 23d;
-            }
+                    for (int i = 0; i < j.getNbChoix(); i++) {
+                        double prog = scEmpty.get(choix[i][0] - 2) + (choix[i][1] == 0 ? 0 : scEmpty.get(choix[i][1] - 2));
 
-            // Si je complete la colonne
-            if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
-                scores[i] += 10;
-            }
-            if (choix[i][0] == choix[i][1]) {
-                if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
-                    scores[i] += 10;
+                        if (prog > progBest) {
+                            best = i;
+                            progBest = prog;
+                        }
+                    }
+                    return best;
+                } else {
+                    int best = 0;
+                    //recup les choix les plus proches de 7
+                    for (int i = 0; i < j.getNbChoix(); i++) {
+                        if (maxCols[choix[i][0] - 2] + (choix[i][1] == 0 ? maxCols[choix[i][0] - 2] : maxCols[choix[i][1] - 2]) < maxCols[choix[best][0] - 2] + (choix[best][1] == 0 ? maxCols[choix[best][0] - 2] : maxCols[choix[best][1] - 2]))
+                            best = i;
+                    }
+                    return best;
                 }
             }
         }
-
-        for (int i = 0; i < scores.length; i++) {
-            if (scores[i] == scores[bestChoice]) {
-                // Si score egaux on favorise les nombres pairs
-                int c1 = 0;
-                int c2 = 0;
-                if (choix[i][0] % 2 == 0) c1++;
-                if (choix[i][1] % 2 == 0) c1++;
-                if (choix[bestChoice][0] % 2 == 0) c2++;
-                if (choix[bestChoice][1] % 2 == 0) c2++;
-                if (c1 > c2) bestChoice = i;
-            }
-            if (scores[i] > scores[bestChoice]) bestChoice = i;
+        bestChoice = 0;
+        for (int i = 0; i < scores.size(); i++) {
+            if (scores.get(i) < scores.get(bestChoice)) bestChoice = i;
         }
-
-        /*if (myProgress[choix[bestChoice][1] - 2] == 0) cantStop += 2 * cantStops[choix[bestChoice][1] - 2];
-        else cantStop += cantStops[choix[bestChoice][1] - 2];
-        if (choix[bestChoice][0] != 0) {
-            if (myProgress[choix[bestChoice][0] - 2] == 0) cantStop += 2 * cantStops[choix[bestChoice][0] - 2];
-            else cantStop += cantStops[choix[bestChoice][0] - 2];
-        }*/
-        cantStop += (100 - stats[choix[bestChoice][1] - 2]);
-        if (choix[bestChoice][0] != 0) {
-            cantStop += (100 - stats[choix[bestChoice][0] - 2]);
-        }
-
         return bestChoice;
     }
 
     @Override
     public boolean stop(Jeu j) {
-        int[][] bonzes = j.getBonzes();
-        int[] maxs = j.getMaximum();
+
+        int nbPlayed = Arrays.stream(bonzes).sum();
+
+        bonzes = new int[11];
+        for (int[] ints : j.getBonzes()) {
+            if (ints[0] == 0) continue;
+            bonzes[ints[0] - 2] = ints[1];
+        }
+        nbPlayed = Arrays.stream(bonzes).sum() - nbPlayed;
+
+        int colsAvailable = 0;
+        int colsCompleted = j.scoreJoueurEnCours();
+        for (boolean b : j.getBloque()) {
+            if (!b) colsAvailable++;
+        }
+
+        for (int i = 0; i < maxCols.length; i++) {
+            if (cols[i] + bonzes[i] >= maxCols[i]) {
+                colsAvailable--;
+                colsCompleted++;
+                hasCompleted = true;
+            }
+        }
+
+        if (colsCompleted >= 3) {
+            nbTours++;
+            return true;
+        }
+
+        var r = new Random();
         if (j.getBonzesRestants() == 0) {
-            int bonzeFinish = 0;
-            for (int[] bonze : bonzes) {
-                if (bonze[0] == 0) continue;
-                if (maxs[bonze[0] - 2] == bonze[1]) {
-                    cantStop = 0;
-                    nbTours++;
-                    return true;
+            if (hasCompleted) {
+
+                nbTours++;
+                return true;
+            }
+            double rnd = r.nextDouble();
+            if (rnd < 0.9) {
+                int position = Arrays.stream(j.getBonzes()).map(bonze -> maxCols[bonze[0] - 2]).reduce(0, Integer::sum);
+                if (position < 11) {
+                    double half = r.nextDouble(0.5, 0.7) * remainMult * (0.67 + colsAvailable * 0.03) * risk;
+                    boolean test = false;
+
+                    for (int i = 0; i < bonzes.length; i++) {
+                        if (bonzes[i] > half * maxCols[i]) {
+                            test = true;
+                            break;
+                        }
+                    }
+                    if (test) {
+                        nbTours++;
+                        return true;
+                    }
                 }
             }
-            if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
-            if (cantStop > 300) {
-                cantStop = 0;
+            AtomicInteger ij = new AtomicInteger();
+            double s = Arrays.stream(bonzes).filter(i -> i != 0).map(i -> maxCols[ij.getAndIncrement()]).reduce(0, Integer::sum);
+            if (nbPlayed > s * r.nextDouble(0.9, 1.1) * risk * remainMult * (0.67 + 0.03 * colsAvailable)) {
                 nbTours++;
                 return true;
             }
@@ -154,6 +244,6 @@ public class Strat13 implements Strategie {
 
     @Override
     public String getName() {
-        return "BP v2.13";
+        return "BP v2.13_1";
     }
 }

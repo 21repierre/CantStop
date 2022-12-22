@@ -8,7 +8,7 @@ import cantstop.Jeu;
  */
 public class Strat49 implements Strategie {
 
-    public static double PARAM = 300;
+    public static double PARAM = 30;
     public static double failed = 0;
     public static int nbTours = 0;
     private static boolean againstMiddle = false;
@@ -38,7 +38,7 @@ public class Strat49 implements Strategie {
             else oProg += otProgress[i];
         }
         if (nbTours >= 20) {
-            //againstMiddle = midProg > oProg;
+            againstMiddle = midProg > oProg;
         }
 
         int bestChoice = 0;
@@ -67,7 +67,7 @@ public class Strat49 implements Strategie {
             if (!b2) {
                 scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
             }
-            if (b1 && b2) scores[i] += 5;
+            //if (b1 && b2) scores[i] += 5;
 
 
             if (choix[i][0] > choix[i][1]) {
@@ -75,28 +75,27 @@ public class Strat49 implements Strategie {
                 choix[i][0] = choix[i][1];
                 choix[i][1] = tmp;
             }
-            // 2eme etape: probabilite de retirer cette colonne au prochina tour
-            //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
-
-            // FAvorise les 3 colonnes du milieu sauf si on est contre une strat full mid -> on elargie aux 2 colonnes de chaques cotes
-            if (againstMiddle) {
-                if (choix[i][0] >= 4 && choix[i][0] <= 5 || choix[i][0] >= 9 && choix[i][0] <= 10)
-                    scores[i] *= stats[choix[i][0] - 2] / 23d;
-                if (choix[i][1] >= 4 && choix[i][1] <= 5 || choix[i][1] >= 9 && choix[i][1] <= 10)
-                    scores[i] *= stats[choix[i][1] - 2] / 23d;
-            } else {
-                if (choix[i][0] >= 6 && choix[i][0] <= 8) scores[i] *= stats[choix[i][0] - 2] / 23d;
-                if (choix[i][1] >= 6 && choix[i][1] <= 8) scores[i] *= stats[choix[i][1] - 2] / 23d;
-            }
-
             // Si je complete la colonne
-            if (myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2]) {
+            if (myProgress[choix[i][1] - 2] + 1 >= maxs[choix[i][1] - 2] || choix[i][0] != 0 && myProgress[choix[i][0] - 2] + 1 >= maxs[choix[i][0] - 2]) {
                 scores[i] += 10;
             }
             if (choix[i][0] == choix[i][1]) {
                 if (myProgress[choix[i][0] - 2] + 2 >= maxs[choix[i][0] - 2]) {
                     scores[i] += 10;
                 }
+            }
+            // 2eme etape: probabilite de retirer cette colonne au prochina tour
+            //scores[i] += (1 + j.getBonzesRestants()) * p(choix[i][0]) * (choix[i][1] != 0 ? p(choix[i][1]) : 0);
+
+            // FAvorise les 3 colonnes du milieu sauf si on est contre une strat full mid -> on elargie aux 2 colonnes de chaques cotes
+            if (againstMiddle) {
+                if (choix[i][0] >= 4 && choix[i][0] <= 5 || choix[i][0] >= 9 && choix[i][0] <= 10)
+                    scores[i] *= stats[choix[i][0] - 2] / 80d;
+                if (choix[i][1] >= 4 && choix[i][1] <= 5 || choix[i][1] >= 9 && choix[i][1] <= 10)
+                    scores[i] *= stats[choix[i][1] - 2] / 80d;
+            } else {
+                if (choix[i][0] >= 6 && choix[i][0] <= 8) scores[i] += stats[choix[i][0] - 2] / 60d;
+                if (choix[i][1] >= 6 && choix[i][1] <= 8) scores[i] += stats[choix[i][1] - 2] / 60d;
             }
         }
 
@@ -120,9 +119,9 @@ public class Strat49 implements Strategie {
             if (myProgress[choix[bestChoice][0] - 2] == 0) cantStop += 2 * cantStops[choix[bestChoice][0] - 2];
             else cantStop += cantStops[choix[bestChoice][0] - 2];
         }*/
-        cantStop += (100 - stats[choix[bestChoice][1] - 2]);
+        cantStop += (myProgress[choix[bestChoice][1] - 2] == 0 ? 2 : 1) * Math.ceil((70 - stats[choix[bestChoice][1] - 2]) / 10d);
         if (choix[bestChoice][0] != 0) {
-            cantStop += (100 - stats[choix[bestChoice][0] - 2]);
+            cantStop += (myProgress[choix[bestChoice][1] - 2] == 0 ? 2 : 1) * Math.ceil((70 - stats[choix[bestChoice][0] - 2]) / 10d);
         }
 
         return bestChoice;
@@ -142,8 +141,8 @@ public class Strat49 implements Strategie {
                     return true;
                 }
             }
-            if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
-            if (cantStop > 300) {
+            //if (j.scoreAutreJoueur() == 2 && j.scoreJoueurEnCours() <= 1) return false;
+            if (cantStop > 28) {
                 cantStop = 0;
                 nbTours++;
                 return true;
@@ -154,6 +153,6 @@ public class Strat49 implements Strategie {
 
     @Override
     public String getName() {
-        return "BP v2.49";
+        return "BP v2.49_1";
     }
 }

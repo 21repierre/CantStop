@@ -11,7 +11,8 @@ for i in range(1,7):
 				a.sort()
 				if a in traites:
 					continue
-
+					#pass
+				traites.append(a)
 				c1 = i+j
 				c2 = k+l
 				c3 = i+k
@@ -24,4 +25,4 @@ for i in range(1,7):
 					results[ch-2]+=1
 
 print(results)
-print([round(res/6**4*100) for res in results])
+print([round(res/len(traites)*100) for res in results])

@@ -2,6 +2,7 @@ package cantstop;
 
 import strategies.Strat0;
 import strategies.Strat13;
+import strategies.Strat49;
 import strategies.Strategie;
 
 import java.util.Random;
@@ -830,10 +831,10 @@ public class Jeu {
                     stat[b][a][3] = victoire[1][3];
 
                     //System.out.println(" => " + victoire[0][0] + " - " + victoire[1][0] + " (" + victoire[0][2] + ", " + victoire[1][2] + ")");
-                    System.out.println(Strat13.PARAM + " " + victoire[0][0]+ " " + Strat13.failed / Strat13.nbTours * 100);
+                    System.out.println(Strat49.PARAM + " " + victoire[0][0]+ " " + Strat49.failed / Strat49.nbTours * 100);
 
-                    Strat13.failed = 0;
-                    Strat13.nbTours = 0;
+                    Strat49.failed = 0;
+                    Strat49.nbTours = 0;
                 }
             }
 
