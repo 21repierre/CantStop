@@ -15,12 +15,7 @@ public class Strat8 implements Strategie {
      * @param j le jeu
      * @return au hasard true ou false (Ã©quiprobabilitÃ©)
      */
-    int score;
-    int compt;
-    int bab = 0;
-    int[] myPog = new int[11];
-    int[][] SaveRule = {{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
-            {6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6}};
+
 
     public int MMax(int[] L) {
         int test = 0;
@@ -81,7 +76,12 @@ public class Strat8 implements Strategie {
         }
         return MMax(Max);
     }
-
+    int score;
+    int compt;
+    int bab = 0;
+    int[] myPog = new int[11];
+    int[][] SaveRule = {{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12},
+            {6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6}};
     public boolean stop(Jeu j) {
         int NbCoup = j.getNbCoup();
         int[][] bonzes = j.getBonzes();

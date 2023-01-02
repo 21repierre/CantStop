@@ -14,12 +14,12 @@ public class Strat10 implements Strategie {
     public static double PARAM = 7E-5;
     public static double failed = 0;
     public static int nbTours = 0;
-    private static boolean againstMiddle = false;
+    private static final boolean againstMiddle = false;
     double cantStop = 0;
     double[] probas = new double[]{13.194444444444445, 23.30246913580247, 35.57098765432099, 44.75308641975309, 56.09567901234568, 64.35185185185185, 56.09567901234568, 44.75308641975309, 35.57098765432099, 23.30246913580247, 13.194444444444445};
     double[] probasLength = new double[]{22.970652220507546, 6.870837971640882, 7.205621855192848, 7.201234082129267, 17.307068100887772, 32.45589863607443, 17.307068100887772, 7.201234082129267, 7.205621855192848, 6.870837971640882, 22.970652220507546};
-    private int midProg = 0;
-    private int oProg = 0;
+    private final int midProg = 0;
+    private final int oProg = 0;
 
     @Override
     public int choix(Jeu j) {
@@ -49,7 +49,7 @@ public class Strat10 implements Strategie {
             for (int[] bonze : bonzes) {
                 if (bonze[0] == choix[i][0]) {
                     if (choix[i][0] == choix[i][1]) {
-                        if (bonze[1] + 2 == maxs[bonze[0] - 2]) finisher.put(i, new Integer[]{2});//return i;
+                        if (bonze[1] + 2 == maxs[bonze[0] - 2]) finisher.put(i, new Integer[]{2});
                     } else if (bonze[1] + 1 == maxs[bonze[0] - 2]) {
                         finisher.put(i, new Integer[]{1, 0});
                     }
@@ -58,7 +58,8 @@ public class Strat10 implements Strategie {
                 }
                 if (choix[i][1] != 0 && bonze[0] == choix[i][1]) {
                     if (bonze[1] + 1 == maxs[bonze[0] - 2]) {
-                        finisher.put(i, new Integer[]{1, 1});
+                        if (finisher.containsKey(i)) finisher.get(i)[1] = 2;
+                        else finisher.put(i, new Integer[]{1, 1});
                     }
                     scores[i] += (bonze[1] - otProgress[choix[i][1] - 2]) / (double) maxs[bonze[0] - 2];
                     b2 = true;
@@ -71,33 +72,21 @@ public class Strat10 implements Strategie {
                 scores[i] += (myProgress[choix[i][1] - 2] - otProgress[choix[i][1] - 2]) / (double) maxs[choix[i][1] - 2];
             }
             // Si je complete la colonne
-            scores[i]=0;
 
             if (choix[i][0] == choix[i][1]) {
                 if (myProgress[choix[i][0] - 2] + 2 == maxs[choix[i][0] - 2]) {
                     finisher.put(i, new Integer[]{2});
-                    //scores[i] += 10;
                 }
             } else if (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] || choix[i][1] != 0 && myProgress[choix[i][1] - 2] + 1 == maxs[choix[i][1] - 2]) {
-                //scores[i] += 10;
-                finisher.put(i, new Integer[]{1, (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] ? 0 : 1)});
+                if (finisher.containsKey(i)) finisher.get(i)[1] = 2;
+                else
+                    finisher.put(i, new Integer[]{1, (myProgress[choix[i][0] - 2] + 1 == maxs[choix[i][0] - 2] ? 0 : 1)});
             }
             // 2eme etape: probabilite de retirer cette colonne au prochina tour
 
-            // FAvorise les 3 colonnes du milieu sauf si on est contre une strat full mid -> on elargie aux 2 colonnes de chaques cotes
-            /*
-            if (againstMiddle) {
-                if (choix[i][0] >= 4 && choix[i][0] <= 5 || choix[i][0] >= 9 && choix[i][0] <= 10)
-                    scores[i] *= probasLength[choix[i][0] - 2] / 80d;
-                if (choix[i][1] >= 4 && choix[i][1] <= 5 || choix[i][1] >= 9 && choix[i][1] <= 10)
-                    scores[i] *= probasLength[choix[i][1] - 2] / 80d;
-            } else {
-                if (choix[i][0] >= 6 && choix[i][0] <= 8) scores[i] += probasLength[choix[i][0] - 2] / 60d;
-                if (choix[i][1] >= 6 && choix[i][1] <= 8) scores[i] += probasLength[choix[i][1] - 2] / 60d;
-            }*/
             if (choix[i][1] != 0)
-                scores[i] += probasLength[choix[i][1] - 2] / 33d;
-            scores[i] += probasLength[choix[i][0] - 2] / 33d;
+                scores[i] += probasLength[choix[i][1] - 2] / 23d;
+            scores[i] += probasLength[choix[i][0] - 2] / 23d;
         }
         if (finisher.size() > 0) {
             if (finisher.values().stream().anyMatch(s -> s[0] == 2)) {
@@ -122,11 +111,21 @@ public class Strat10 implements Strategie {
                     if (finisher.get(i)[0] == 2) continue;
                     if (bestChoice == -1) {
                         bestChoice = i;
-                        bestScore = probas[choix[i][finisher.get(i)[1]] - 2];
+                        if (finisher.get(i)[1] == 2)
+                            bestScore = probas[choix[i][finisher.get(i)[1] - 2] - 2] + probas[choix[i][finisher.get(i)[1] - 1] - 2];
+                        else
+                            bestScore = probas[choix[i][finisher.get(i)[1]] - 2];
                         continue;
                     }
-                    double score = probas[choix[i][finisher.get(i)[1]] - 2];
-                    if (score > bestScore) bestChoice = i;
+                    double score = 0;
+                    if (finisher.get(i)[1] == 2)
+                        score = probas[choix[i][finisher.get(i)[1] - 2] - 2] + probas[choix[i][finisher.get(i)[1] - 1] - 2];
+                    else
+                        score = probas[choix[i][finisher.get(i)[1]] - 2];
+                    if (score > bestScore) {
+                        bestChoice = i;
+                        bestScore = score;
+                    }
                 }
                 return bestChoice;
             }
@@ -134,7 +133,7 @@ public class Strat10 implements Strategie {
 
         for (int i = 0; i < scores.length; i++) {
             if (scores[i] == scores[bestChoice]) {
-                // Si score egaux on favorise les nombres pairs
+                // Si scores egaux on favorise les nombres pairs
                 int c1 = 0;
                 int c2 = 0;
                 if (choix[i][0] % 2 == 0) c1++;
